@@ -3,22 +3,23 @@ package dao;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import entities.TitoloDiViaggio;
+
+import entities.Utente;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TitoloDiViaggioDao {
+public class UtenteDao {
 	private final EntityManager em;
 
-	public TitoloDiViaggioDao(EntityManager em) {
+	public UtenteDao(EntityManager em) {
 		this.em = em;
 	}
 
-	public void salvaTitoloDiViaggio(TitoloDiViaggio tv) {
+	public void salvaUtente(Utente utente) {
 		EntityTransaction t = em.getTransaction();
 		t.begin();
-		em.persist(tv);
+		em.persist(utente);
 		t.commit();
-		log.info("Titolo di viaggio salvato correttamente");
+		log.info("Utente salvato correttamente");
 	}
 }

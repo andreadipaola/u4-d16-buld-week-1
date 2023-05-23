@@ -21,7 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class TitoloDiViaggio {
+public abstract class TitoloDiViaggio {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
