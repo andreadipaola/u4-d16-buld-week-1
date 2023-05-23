@@ -15,10 +15,9 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class Rivenditore extends PuntoDiEmissione {
-	public Rivenditore (long id) {
-		super (id);
-	}
-	
-	
+	private boolean inAttivita;
 
+	public Rivenditore(boolean inAttivita) {
+		this.inAttivita = inAttivita;
+	}
 }

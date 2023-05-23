@@ -16,11 +16,8 @@ import lombok.ToString;
 @DiscriminatorValue(value = "distributore")
 public class Distributore extends PuntoDiEmissione {
 	private boolean inAttivita;
-	public Distributore (long id,boolean inAttivita) {
-		super (id);
+
+	public Distributore(boolean inAttivita) {
 		this.inAttivita = inAttivita;
 	}
-	
-	
-
 }
