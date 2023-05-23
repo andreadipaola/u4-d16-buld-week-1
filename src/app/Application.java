@@ -5,15 +5,18 @@ import java.time.LocalDate;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import dao.MezzoDao;
 import dao.PuntoDiEmissioneDao;
 import dao.TesseraDao;
 import dao.TitoloDiViaggioDao;
 import dao.UtenteDao;
 import entities.Abbonamento;
+import entities.Autobus;
 import entities.Biglietto;
 import entities.Distributore;
 import entities.Rivenditore;
 import entities.Tessera;
+import entities.Tram;
 import entities.Utente;
 import enums.Periodicita;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +48,14 @@ public class Application {
 
 		pe.salvaPuntoEmissione(rivenditore);
 		pe.salvaPuntoEmissione(distributore);
+
+		MezzoDao me = new MezzoDao(em);
+		Autobus autobus1 = new Autobus(50, true);
+		Tram tram1 = new Tram(70, true);
+
+		me.salvaMezzo(tram1);
+		me.salvaMezzo(autobus1);
+
 		em.close();
 		emf.close();
 	}
