@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -23,12 +22,11 @@ import lombok.ToString;
 @Table(name = "tessere_")
 public class Tessera {
 	@Id
-
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 	private LocalDate dataEmissione;
-	@OneToOne(mappedBy = "tessera")
-	private Utente utente;
+//	@OneToOne(mappedBy = "tessera")
+//	private Utente utente;
 
 	public LocalDate dataScadenzaFun(LocalDate dataEmissione) {
 

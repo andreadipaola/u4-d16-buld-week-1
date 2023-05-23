@@ -2,7 +2,6 @@ package entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,8 +20,8 @@ public class Utente {
 	private String nome;
 	private String cognome;
 	private int eta;
-	@OneToOne
-	private Tessera tessera;
+//	@OneToOne
+//	private Tessera tessera;
 
 	public Utente(String codiceFiscale, String nome, String cognome, int eta) {
 		this.codiceFiscale = codiceFiscale;
