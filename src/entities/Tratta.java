@@ -1,12 +1,15 @@
 package entities;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -27,6 +30,8 @@ public class Tratta {
 	private double tempoMedioDiPercorrenza;
 	private LocalDate oraDiPartenza;
 	private LocalDate oraDiArrivoEffettiva;
+	@ManyToMany(mappedBy = "tratte", fetch = FetchType.EAGER)
+	private List<Mezzo> mezzi;
 
 	public Tratta(String partenza, String capolinea, double tempoMedioDiPercorrenza, LocalDate oraDiPartenza,
 			LocalDate oraDiArrivoEffettiva) {
