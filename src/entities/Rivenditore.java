@@ -9,15 +9,13 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@DiscriminatorValue(value = "rivenditore")
+@DiscriminatorValue(value = "Rivenditori")
 @Setter
 @Getter
 @ToString
 @NoArgsConstructor
 public class Rivenditore extends PuntoDiEmissione {
-	private boolean inAttivita;
-
 	public Rivenditore(boolean inAttivita) {
-		this.inAttivita = inAttivita;
+		super(inAttivita);
 	}
 }

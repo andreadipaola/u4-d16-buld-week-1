@@ -14,23 +14,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Table(name = "tratte")
 @NoArgsConstructor
 @Setter
 @Getter
-@Table(name = "tratte")
 public class Tratta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
-	private String zonaDiPartenza;
+	private String partenza;
 	private String capolinea;
 	private double tempoMedioDiPercorrenza;
 	private LocalDate oraDiPartenza;
 	private LocalDate oraDiArrivoEffettiva;
 
-	public Tratta(String zonaDiPartenza, String capolinea, double tempoMedioDiPercorrenza, LocalDate oraDiPartenza,
+	public Tratta(String partenza, String capolinea, double tempoMedioDiPercorrenza, LocalDate oraDiPartenza,
 			LocalDate oraDiArrivoEffettiva) {
-		this.zonaDiPartenza = zonaDiPartenza;
+		this.partenza = partenza;
 		this.capolinea = capolinea;
 		this.tempoMedioDiPercorrenza = tempoMedioDiPercorrenza;
 		this.oraDiPartenza = oraDiPartenza;

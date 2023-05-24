@@ -14,12 +14,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
-@Setter
-@ToString
 @Entity
+@Table(name = "tessere")
 @NoArgsConstructor
-@Table(name = "tessere_")
+@Setter
+@Getter
+@ToString
 public class Tessera {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
