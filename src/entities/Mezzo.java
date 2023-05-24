@@ -1,9 +1,9 @@
 package entities;
 
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -37,8 +38,9 @@ public abstract class Mezzo {
 	private int capienza;
 	private boolean inServizio;
 
-	@OneToMany(mappedBy = "mezzo", fetch = FetchType.EAGER)
-	private List<Biglietto> biglietti;
+	@OneToMany(mappedBy = "mezzo", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OrderBy("dataVidimazione DESC")
+	private Set<Biglietto> biglietti;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "mezzo_tratta", joinColumns = @JoinColumn(name = "mezzo_id"), inverseJoinColumns = @JoinColumn(name = "tratta_id"))

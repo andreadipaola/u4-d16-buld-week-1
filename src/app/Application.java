@@ -39,7 +39,7 @@ public class Application {
 		MezzoDao me = new MezzoDao(em);
 		TrattaDao tr = new TrattaDao(em);
 
-		Utente utente1 = new Utente("aXl1654skC1f5t4s0", "Gianluca", "Praticò", 29);
+		Utente utente1 = new Utente("aX91654skFyh5t4s0", "Gianluca", "Praticò", 29);
 		Tessera tessera1 = new Tessera(LocalDate.parse("2015-11-12"));
 		Rivenditore rivenditore = new Rivenditore(false);
 		Distributore distributore = new Distributore(true);
@@ -51,12 +51,16 @@ public class Application {
 		ut.salvaUtente(utente1);
 		utente1.setTessera(tessera1);
 		te.salvaTessera(tessera1);
-		PuntoDiEmissione pfound = pe.findById("017bc92b-9119-4e04-842c-d39f961a973e");
-		Tessera tfound = te.findById("0bf2d58e-f1a5-4fa6-aacd-c30a56fdd295");
+		PuntoDiEmissione pfound = pe.findById("1dbd4559-07f7-4990-8ec9-a2c50f3e47f9");
+		Tessera tfound = te.findById("184ae965-6b4e-4551-84c5-86e92215fb0a");
+		me.salvaMezzo(autobus1);
+		tr.salvaTratta(tratta1);
+		pe.salvaPuntoEmissione(rivenditore);
+		pe.salvaPuntoEmissione(distributore);
 
 		if (pfound != null) {
 			Biglietto biglietto1 = new Biglietto(pfound, LocalDate.parse("2012-11-12"), true,
-					LocalDate.parse("2012-12-11"));
+					LocalDate.parse("2012-12-11"), autobus1);
 			Abbonamento abbonamento1 = new Abbonamento(pfound, LocalDate.parse("2011-11-12"), Periodicita.MENSILE,
 					tfound);
 
@@ -67,11 +71,6 @@ public class Application {
 
 		// pfound.getTitoliDiViaggio().stream().forEach(t -> log.info(t.toString()));
 		// tfound.getAbbonamenti().stream().forEach(t -> log.info(t.toString()));
-
-		pe.salvaPuntoEmissione(rivenditore);
-		pe.salvaPuntoEmissione(distributore);
-		me.salvaMezzo(autobus1);
-		tr.salvaTratta(tratta1);
 
 		em.close();
 		emf.close();

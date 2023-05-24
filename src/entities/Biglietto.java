@@ -20,17 +20,19 @@ import lombok.ToString;
 @ToString
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
 @NoArgsConstructor
+
 public class Biglietto extends TitoloDiViaggio {
 	private boolean vidimato;
 	private LocalDate dataVidimazione;
 	@ManyToOne
-	@JoinColumn(name = "mezzo_id")
+	@JoinColumn(name = "mezzo_id", referencedColumnName = "id", nullable = false)
 	private Mezzo mezzo;
 
 	public Biglietto(PuntoDiEmissione puntoDiEmissione, LocalDate dataEmissione, boolean vidimato,
-			LocalDate dataVidimazione) {
+			LocalDate dataVidimazione, Mezzo mezzo) {
 		super(puntoDiEmissione, dataEmissione);
 		this.vidimato = vidimato;
 		this.dataVidimazione = dataVidimazione;
+		this.mezzo = mezzo;
 	}
 }
