@@ -11,13 +11,12 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Table(name = "biglietti")
 @Setter
 @Getter
-@ToString
+//@ToString
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
 @NoArgsConstructor
 
@@ -35,4 +34,10 @@ public class Biglietto extends TitoloDiViaggio {
 		this.dataVidimazione = dataVidimazione;
 		this.mezzo = mezzo;
 	}
+
+	@Override
+	public String toString() {
+		return "Biglietto [vidimato=" + vidimato + ", dataVidimazione=" + dataVidimazione + ", mezzo=" + mezzo + "]";
+	}
+
 }

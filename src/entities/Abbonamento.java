@@ -14,16 +14,16 @@ import enums.Periodicita;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Table(name = "abbonamenti")
 @NoArgsConstructor
 @Setter
 @Getter
-@ToString
+//@ToString
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
 public class Abbonamento extends TitoloDiViaggio {
+
 	@Enumerated(EnumType.STRING)
 	private Periodicita periodicita;
 	@ManyToOne
@@ -35,5 +35,10 @@ public class Abbonamento extends TitoloDiViaggio {
 		super(puntoDiEmissione, dataEmissione);
 		this.periodicita = periodicita;
 		this.tessera = tessera;
+	}
+
+	@Override
+	public String toString() {
+		return "Abbonamento [periodicita=" + periodicita + ", tessera_id=" + tessera.getId() + "]";
 	}
 }

@@ -6,13 +6,12 @@ import javax.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @DiscriminatorValue(value = "Rivenditori")
 @Setter
 @Getter
-@ToString
+//@ToString
 @NoArgsConstructor
 public class Rivenditore extends PuntoDiEmissione {
 	public Rivenditore(boolean inAttivita) {

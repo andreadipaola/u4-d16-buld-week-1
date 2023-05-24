@@ -51,4 +51,10 @@ public abstract class Mezzo {
 		this.inServizio = inServizio;
 	}
 
+//	@Override
+//	public String toString() {
+//		return "Mezzo [id=" + id + ", capienza=" + capienza + ", inServizio=" + inServizio + ", biglietti=" + biglietti
+//				+ ", tratte=" + tratte + "]";
+//	}
+
 }

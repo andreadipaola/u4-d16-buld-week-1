@@ -22,6 +22,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Tratta {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
@@ -41,4 +42,12 @@ public class Tratta {
 		this.oraDiPartenza = oraDiPartenza;
 		this.oraDiArrivoEffettiva = oraDiArrivoEffettiva;
 	}
+
+	@Override
+	public String toString() {
+		return "Tratta [id=" + id + ", partenza=" + partenza + ", capolinea=" + capolinea + ", tempoMedioDiPercorrenza="
+				+ tempoMedioDiPercorrenza + ", oraDiPartenza=" + oraDiPartenza + ", oraDiArrivoEffettiva="
+				+ oraDiArrivoEffettiva + ", mezzi=" + mezzi + "]";
+	}
+
 }

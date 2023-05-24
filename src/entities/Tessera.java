@@ -18,15 +18,15 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Table(name = "tessere")
 @NoArgsConstructor
 @Setter
 @Getter
-@ToString
+//@ToString
 public class Tessera {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
@@ -47,4 +47,11 @@ public class Tessera {
 	public Tessera(LocalDate dataEmissione) {
 		this.dataEmissione = dataEmissione;
 	}
+
+	@Override
+	public String toString() {
+		return "Tessera [id=" + id + ", dataEmissione=" + dataEmissione + ", utente=" + utente + ", abbonamenti="
+				+ abbonamenti + "]";
+	}
+
 }
