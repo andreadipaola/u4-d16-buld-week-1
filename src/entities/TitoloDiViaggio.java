@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -26,6 +28,9 @@ public abstract class TitoloDiViaggio {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 	private LocalDate dataEmissione;
+	@ManyToOne
+	@JoinColumn(name = "punto_di_emissione_id")
+	private PuntoDiEmissione puntoDiEmissione;
 
 	public TitoloDiViaggio(LocalDate dataEmissione) {
 		this.dataEmissione = dataEmissione;

@@ -2,6 +2,8 @@ package entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -22,8 +24,9 @@ public class Utente {
 	private String nome;
 	private String cognome;
 	private int eta;
-//	@OneToOne
-//	private Tessera tessera;
+	@OneToOne
+	@JoinColumn(name = "tessera_id", referencedColumnName = "id")
+	private Tessera tessera;
 
 	public Utente(String codiceFiscale, String nome, String cognome, int eta) {
 		this.codiceFiscale = codiceFiscale;
