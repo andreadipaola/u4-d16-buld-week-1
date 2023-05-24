@@ -1,10 +1,11 @@
 package dao;
 
+import java.util.UUID;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import entities.Tessera;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -21,5 +22,11 @@ public class TesseraDao {
 		em.persist(tessera);
 		t.commit();
 		log.info("Tessera salvata correttamente");
+	}
+
+	public Tessera findById(String id) {
+		Tessera found = em.find(Tessera.class, UUID.fromString(id));
+		return found;
+
 	}
 }

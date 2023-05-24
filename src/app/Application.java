@@ -39,7 +39,7 @@ public class Application {
 		MezzoDao me = new MezzoDao(em);
 		TrattaDao tr = new TrattaDao(em);
 
-		Utente utente1 = new Utente("idl15gsdki095t4h0", "Gianluca", "Praticò", 29);
+		Utente utente1 = new Utente("aXl1654skC1f5t4s0", "Gianluca", "Praticò", 29);
 		Tessera tessera1 = new Tessera(LocalDate.parse("2015-11-12"));
 		Rivenditore rivenditore = new Rivenditore(false);
 		Distributore distributore = new Distributore(true);
@@ -48,29 +48,30 @@ public class Application {
 		Tratta tratta1 = new Tratta("Roma Termini", "Colosseo", 12.5, LocalDate.parse("2012-11-12"),
 				LocalDate.parse("2012-11-12"));
 
+		ut.salvaUtente(utente1);
 		utente1.setTessera(tessera1);
-		PuntoDiEmissione found = pe.findById("1c1dd74f-6321-4e50-9960-6ecaf8bfba2f");
-		if (found != null) {
-			Biglietto biglietto1 = new Biglietto(found, LocalDate.parse("2012-11-12"), true,
+		te.salvaTessera(tessera1);
+		PuntoDiEmissione pfound = pe.findById("017bc92b-9119-4e04-842c-d39f961a973e");
+		Tessera tfound = te.findById("0bf2d58e-f1a5-4fa6-aacd-c30a56fdd295");
+
+		if (pfound != null) {
+			Biglietto biglietto1 = new Biglietto(pfound, LocalDate.parse("2012-11-12"), true,
 					LocalDate.parse("2012-12-11"));
-			Abbonamento abbonamento1 = new Abbonamento(found, LocalDate.parse("2011-11-12"), Periodicita.MENSILE);
+			Abbonamento abbonamento1 = new Abbonamento(pfound, LocalDate.parse("2011-11-12"), Periodicita.MENSILE,
+					tfound);
 
-//			BlogPost java = new BlogPost("JPA", "bellissimo", found);
-			// bd.saveBlog(java);
 			tv.salvaTitoloDiViaggio(biglietto1);
+
 			tv.salvaTitoloDiViaggio(abbonamento1);
-
 		}
-//		found.getBlogPosts().stream().forEach(b -> log.info(b.toString()));
-		found.getTitoliDiViaggio().stream().forEach(t -> log.info(t.toString()));
 
-//		ut.salvaUtente(utente1);
-//		te.salvaTessera(tessera1);
-//		pe.salvaPuntoEmissione(rivenditore);
-//		pe.salvaPuntoEmissione(distributore);
-//		me.salvaMezzo(tram1);
-//		me.salvaMezzo(autobus1);
-//		tr.salvaTratta(tratta1);
+		// pfound.getTitoliDiViaggio().stream().forEach(t -> log.info(t.toString()));
+		// tfound.getAbbonamenti().stream().forEach(t -> log.info(t.toString()));
+
+		pe.salvaPuntoEmissione(rivenditore);
+		pe.salvaPuntoEmissione(distributore);
+		me.salvaMezzo(autobus1);
+		tr.salvaTratta(tratta1);
 
 		em.close();
 		emf.close();

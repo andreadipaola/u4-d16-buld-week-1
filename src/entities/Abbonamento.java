@@ -27,11 +27,13 @@ public class Abbonamento extends TitoloDiViaggio {
 	@Enumerated(EnumType.STRING)
 	private Periodicita periodicita;
 	@ManyToOne
-	@JoinColumn(name = "tessera_id")
+	@JoinColumn(name = "tessera_id", referencedColumnName = "id", nullable = false)
 	private Tessera tessera;
 
-	public Abbonamento(PuntoDiEmissione puntoDiEmissione, LocalDate dataEmissione, Periodicita periodicita) {
+	public Abbonamento(PuntoDiEmissione puntoDiEmissione, LocalDate dataEmissione, Periodicita periodicita,
+			Tessera tessera) {
 		super(puntoDiEmissione, dataEmissione);
 		this.periodicita = periodicita;
+		this.tessera = tessera;
 	}
 }
