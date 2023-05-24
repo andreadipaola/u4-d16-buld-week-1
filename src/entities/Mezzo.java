@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.DiscriminatorColumn;
@@ -36,12 +37,12 @@ public abstract class Mezzo {
 	private int capienza;
 	private boolean inServizio;
 
-	@OneToMany(mappedBy = "mezzo", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "mezzo", fetch = FetchType.EAGER)
 	private List<Biglietto> biglietti;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "mezzo_tratta", joinColumns = @JoinColumn(name = "mezzo_id"), inverseJoinColumns = @JoinColumn(name = "tratta_id"))
-	private List<Tratta> tratte;
+	private Set<Tratta> tratte;
 
 	public Mezzo(int capienza, boolean inServizio) {
 		this.capienza = capienza;

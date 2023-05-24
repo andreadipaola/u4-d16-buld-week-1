@@ -1,7 +1,7 @@
 package entities;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Entity;
@@ -31,7 +31,7 @@ public class Tratta {
 	private LocalDate oraDiPartenza;
 	private LocalDate oraDiArrivoEffettiva;
 	@ManyToMany(mappedBy = "tratte", fetch = FetchType.EAGER)
-	private List<Mezzo> mezzi;
+	private Set<Mezzo> mezzi;
 
 	public Tratta(String partenza, String capolinea, double tempoMedioDiPercorrenza, LocalDate oraDiPartenza,
 			LocalDate oraDiArrivoEffettiva) {
