@@ -39,7 +39,7 @@ public class Application {
 		MezzoDao me = new MezzoDao(em);
 		TrattaDao tr = new TrattaDao(em);
 
-		Utente utente1 = new Utente("idf15gsdki075t4h9", "Gianluca", "Praticò", 29);
+		Utente utente1 = new Utente("idl15gsdki095t4h0", "Gianluca", "Praticò", 29);
 		Tessera tessera1 = new Tessera(LocalDate.parse("2015-11-12"));
 		Rivenditore rivenditore = new Rivenditore(false);
 		Distributore distributore = new Distributore(true);
@@ -62,15 +62,15 @@ public class Application {
 
 		}
 //		found.getBlogPosts().stream().forEach(b -> log.info(b.toString()));
-//		found.getTitoliDiViaggio().stream().forEach(t -> log.info(t.toString()));
+		found.getTitoliDiViaggio().stream().forEach(t -> log.info(t.toString()));
 
-		ut.salvaUtente(utente1);
-		te.salvaTessera(tessera1);
-		pe.salvaPuntoEmissione(rivenditore);
-		pe.salvaPuntoEmissione(distributore);
-		me.salvaMezzo(tram1);
-		me.salvaMezzo(autobus1);
-		tr.salvaTratta(tratta1);
+//		ut.salvaUtente(utente1);
+//		te.salvaTessera(tessera1);
+//		pe.salvaPuntoEmissione(rivenditore);
+//		pe.salvaPuntoEmissione(distributore);
+//		me.salvaMezzo(tram1);
+//		me.salvaMezzo(autobus1);
+//		tr.salvaTratta(tratta1);
 
 		em.close();
 		emf.close();

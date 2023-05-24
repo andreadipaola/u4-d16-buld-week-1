@@ -37,7 +37,7 @@ public abstract class PuntoDiEmissione {
 	private boolean inAttivita;
 
 	@OneToMany(mappedBy = "puntoDiEmissione", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@OrderBy("title DESC")
+	@OrderBy("puntoDiEmissione DESC")
 	private Set<TitoloDiViaggio> titoliDiViaggio;
 
 	public PuntoDiEmissione(boolean inAttivita) {
