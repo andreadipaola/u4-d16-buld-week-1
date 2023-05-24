@@ -29,10 +29,12 @@ public abstract class TitoloDiViaggio {
 	private UUID id;
 	private LocalDate dataEmissione;
 	@ManyToOne
-	@JoinColumn(name = "punto_di_emissione_id")
+//	@JoinColumn(name = "punto_di_emissione_id")
+	@JoinColumn(name = "punto_di_emissione_id", referencedColumnName = "id", nullable = false)
 	private PuntoDiEmissione puntoDiEmissione;
 
-	public TitoloDiViaggio(LocalDate dataEmissione) {
+	public TitoloDiViaggio(PuntoDiEmissione puntoDiEmissione, LocalDate dataEmissione) {
+		this.puntoDiEmissione = puntoDiEmissione;
 		this.dataEmissione = dataEmissione;
 	}
 }

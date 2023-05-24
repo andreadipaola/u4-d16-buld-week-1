@@ -1,8 +1,9 @@
 package entities;
 
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -34,8 +36,9 @@ public abstract class PuntoDiEmissione {
 	private UUID id;
 	private boolean inAttivita;
 
-	@OneToMany(mappedBy = "puntoDiEmissione", fetch = FetchType.EAGER)
-	private List<TitoloDiViaggio> titoliDiViaggio;
+	@OneToMany(mappedBy = "puntoDiEmissione", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OrderBy("title DESC")
+	private Set<TitoloDiViaggio> titoliDiViaggio;
 
 	public PuntoDiEmissione(boolean inAttivita) {
 		this.inAttivita = inAttivita;

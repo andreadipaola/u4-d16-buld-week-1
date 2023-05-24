@@ -1,5 +1,6 @@
 package entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -24,7 +25,7 @@ public class Utente {
 	private String nome;
 	private String cognome;
 	private int eta;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "tessera_id", referencedColumnName = "id")
 	private Tessera tessera;
 

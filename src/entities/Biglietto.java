@@ -27,8 +27,9 @@ public class Biglietto extends TitoloDiViaggio {
 	@JoinColumn(name = "mezzo_id")
 	private Mezzo mezzo;
 
-	public Biglietto(LocalDate dataEmissione, boolean vidimato, LocalDate dataVidimazione) {
-		super(dataEmissione);
+	public Biglietto(PuntoDiEmissione puntoDiEmissione, LocalDate dataEmissione, boolean vidimato,
+			LocalDate dataVidimazione) {
+		super(puntoDiEmissione, dataEmissione);
 		this.vidimato = vidimato;
 		this.dataVidimazione = dataVidimazione;
 	}

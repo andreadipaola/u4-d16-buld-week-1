@@ -30,8 +30,8 @@ public class Abbonamento extends TitoloDiViaggio {
 	@JoinColumn(name = "tessera_id")
 	private Tessera tessera;
 
-	public Abbonamento(LocalDate dataEmissione, Periodicita periodicita) {
-		super(dataEmissione);
+	public Abbonamento(PuntoDiEmissione puntoDiEmissione, LocalDate dataEmissione, Periodicita periodicita) {
+		super(puntoDiEmissione, dataEmissione);
 		this.periodicita = periodicita;
 	}
 }
