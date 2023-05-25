@@ -11,11 +11,10 @@ import lombok.Setter;
 @DiscriminatorValue(value = "Autobus")
 @Setter
 @Getter
-//@ToString
 @NoArgsConstructor
 public class Autobus extends Mezzo {
 
-	public Autobus(boolean inServizio) {
-		super(54, inServizio);
+	public Autobus(String numero, boolean inServizio, Tratta tratta) {
+		super(numero, inServizio, tratta, 54);
 	}
 }

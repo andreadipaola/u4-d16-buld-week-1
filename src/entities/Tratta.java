@@ -1,15 +1,15 @@
 package entities;
 
-import java.time.LocalDate;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -22,32 +22,19 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Tratta {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 	private String partenza;
 	private String capolinea;
-	private double tempoMedioDiPercorrenza;
-	private LocalDate oraDiPartenza;
-	private LocalDate oraDiArrivoEffettiva;
-	@ManyToMany(mappedBy = "tratte", fetch = FetchType.EAGER)
+	@Column(name = "tempo_medio_percorrenza")
+	private double tempoMedioPercorrenza;
+	@OneToMany(mappedBy = "tratta", fetch = FetchType.EAGER)
 	private Set<Mezzo> mezzi;
 
-	public Tratta(String partenza, String capolinea, double tempoMedioDiPercorrenza, LocalDate oraDiPartenza,
-			LocalDate oraDiArrivoEffettiva) {
+	public Tratta(String partenza, String capolinea, double tempoMedioPercorrenza) {
 		this.partenza = partenza;
 		this.capolinea = capolinea;
-		this.tempoMedioDiPercorrenza = tempoMedioDiPercorrenza;
-		this.oraDiPartenza = oraDiPartenza;
-		this.oraDiArrivoEffettiva = oraDiArrivoEffettiva;
+		this.tempoMedioPercorrenza = tempoMedioPercorrenza;
 	}
-
-	@Override
-	public String toString() {
-		return "Tratta [id=" + id + ", partenza=" + partenza + ", capolinea=" + capolinea + ", tempoMedioDiPercorrenza="
-				+ tempoMedioDiPercorrenza + ", oraDiPartenza=" + oraDiPartenza + ", oraDiArrivoEffettiva="
-				+ oraDiArrivoEffettiva + ", mezzi=" + mezzi + "]";
-	}
-
 }

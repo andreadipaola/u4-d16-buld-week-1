@@ -1,8 +1,5 @@
 package dao;
 
-import java.time.LocalDate;
-
-import javax.management.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
@@ -26,9 +23,9 @@ public class TitoloDiViaggioDao {
 
 	}
 
-	public void ConteggioTitoliDiViaggio(LocalDate dataInizio, LocalDate dataFine) {
-		Query conteggio = em.createQuery("SELECT COUNT(*) FROM titoli_di_viaggio WHERE ")
-	}
+//	public void ConteggioTitoliDiViaggio(LocalDate dataInizio, LocalDate dataFine) {
+//		Query conteggio = em.createQuery("SELECT COUNT(*) FROM titoli_di_viaggio WHERE ")
+//	}
 
 	// SELECT * FROM titoli_di_viaggio JOIN punto_di_emissione
 	// ON titoli_di_viaggio.punto_di_emissione_id = punto_di_emissione.id
