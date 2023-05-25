@@ -15,6 +15,6 @@ import lombok.Setter;
 public class Tram extends Mezzo {
 
 	public Tram(boolean inServizio) {
-		super(50, inServizio);
+		super(30, inServizio);
 	}
 }

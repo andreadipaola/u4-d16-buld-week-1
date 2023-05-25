@@ -102,10 +102,12 @@ public class Application {
 
 		PuntoDiEmissione pfound = pe.findById("1c1dd74f-6321-4e50-9960-6ecaf8bfba2f");
 		Tessera tfound = te.findById("f880fe9e-593d-4cb0-8739-0c6634306469");
-		UUID id = UUID.fromString("339159e1-8215-4dfd-89f7-ad94fef36d05");
-		pe.bigliettiEmessi(id);
 
-		pe.abbonamentiEmessi(id);
+		UUID id = UUID.fromString("3ee4df4a-ee6f-4d3f-b318-61fe0251d1b7");
+		int abbonamentiEmessi = pe.abbonamentiEmessi(id);
+		log.info("gli abbonamenti emessi sono: {}", abbonamentiEmessi);
+		int bigliettiEmessi = pe.bigliettiEmessi(id);
+		log.info("i biglietti emessi sono: {}", bigliettiEmessi);
 
 		tram1.getTratte().stream().forEach(t -> log.info(t.toString()));
 		log.info("------------------------------------------------------");
