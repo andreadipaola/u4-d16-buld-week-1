@@ -100,10 +100,10 @@ public class Application {
 		tram1.setTratte(new HashSet<>(Arrays.asList(tratta1, tratta2, tratta3)));
 		tratta1.setMezzi(new HashSet<>(Arrays.asList(tram1, autobus2)));
 
-		PuntoDiEmissione pfound = pe.findById("021585fe-0ad7-4123-a44d-9a3ed3647cd6");
+		PuntoDiEmissione pfound = pe.findById("498b75b0-c55f-4a0d-a57d-36a3e3f4720a");
 		// Tessera tfound = te.findById("f880fe9e-593d-4cb0-8739-0c6634306469");
 
-		UUID id = UUID.fromString("021585fe-0ad7-4123-a44d-9a3ed3647cd6");
+		UUID id = UUID.fromString("498b75b0-c55f-4a0d-a57d-36a3e3f4720a");
 		int abbonamentiEmessi = pe.abbonamentiEmessi(id);
 		log.info("gli abbonamenti emessi sono: {}", abbonamentiEmessi);
 		int bigliettiEmessi = pe.bigliettiEmessi(id);
