@@ -14,9 +14,8 @@ import lombok.Setter;
 //@ToString
 @NoArgsConstructor
 public class Autobus extends Mezzo {
-	// int capienza = 50;
 
-	public Autobus(int capienza, boolean inServizio) {
-		super(capienza, inServizio);
+	public Autobus(boolean inServizio) {
+		super(54, inServizio);
 	}
 }

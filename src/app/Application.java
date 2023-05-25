@@ -31,6 +31,7 @@ import utils.JpaUtil;
 @Slf4j
 public class Application {
 	private static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
+	static boolean inServizio = true;
 
 	public static void main(String[] args) {
 		EntityManager em = emf.createEntityManager();
@@ -44,7 +45,7 @@ public class Application {
 		TrattaDao tr = new TrattaDao(em);
 
 		// ISTANZE DI CLASSI (OGGETTI)
-		Utente utente1 = new Utente("198vc6hsshsfeadcppl", "Gianluca", "Praticò", 29);
+		Utente utente1 = new Utente("Gianluca", "Praticò", 29);
 		ut.salvaUtente(utente1);
 
 		Tessera tessera1 = new Tessera(LocalDate.parse("2023-11-12"));
@@ -59,7 +60,7 @@ public class Application {
 		Distributore distributore1 = new Distributore(true);
 		pe.salvaPuntoEmissione(distributore1);
 
-		Autobus autobus1 = new Autobus(50, true);
+		Autobus autobus1 = new Autobus(inServizio);
 		me.salvaMezzo(autobus1);
 
 		Biglietto biglietto1 = new Biglietto(rivenditore1, LocalDate.parse("2012-11-12"), true,
@@ -70,11 +71,21 @@ public class Application {
 				tessera1);
 		tv.salvaTitoloDiViaggio(abbonamento1);
 
-		Tram tram1 = new Tram(70, true);
+		// *********************************************
+		Tram tram1 = new Tram(inServizio);
 		me.salvaMezzo(tram1);
+		int capienza1 = tram1.getCapienza();
+		boolean isTramInServizio1 = tram1.isInServizio();
+		log.info("Il valore di capienza è: {}", capienza1);
+		log.info("Il valore di isTramInServizio1 è: {}", isTramInServizio1);
 
-		Tram tram2 = new Tram(25, true);
-		me.salvaMezzo(tram2);
+		Autobus autobus2 = new Autobus(inServizio);
+		me.salvaMezzo(autobus2);
+		int capienza2 = autobus2.getCapienza();
+		boolean isTramInServizio2 = autobus2.isInServizio();
+		log.info("Il valore di capienza è: {}", capienza2);
+		log.info("Il valore di isTramInServizio2 è: {}", isTramInServizio2);
+		// *********************************************
 
 		Tratta tratta1 = new Tratta("Roma Termini", "Colosseo", 12.5, LocalDate.parse("2012-11-12"),
 				LocalDate.parse("2012-11-12"));
@@ -87,7 +98,7 @@ public class Application {
 		tr.salvaTratta(tratta3);
 
 		tram1.setTratte(new HashSet<>(Arrays.asList(tratta1, tratta2, tratta3)));
-		tratta1.setMezzi(new HashSet<>(Arrays.asList(tram1, tram2)));
+		tratta1.setMezzi(new HashSet<>(Arrays.asList(tram1, autobus2)));
 
 		PuntoDiEmissione pfound = pe.findById("1c1dd74f-6321-4e50-9960-6ecaf8bfba2f");
 		Tessera tfound = te.findById("f880fe9e-593d-4cb0-8739-0c6634306469");

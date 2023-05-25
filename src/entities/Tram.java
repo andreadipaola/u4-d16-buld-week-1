@@ -9,13 +9,12 @@ import lombok.Setter;
 
 @Entity
 @DiscriminatorValue(value = "Tram")
+@NoArgsConstructor
 @Setter
 @Getter
-@NoArgsConstructor
 public class Tram extends Mezzo {
-//	int capienza = 100;
 
-	public Tram(int capienza, boolean inServizio) {
-		super(capienza, inServizio);
+	public Tram(boolean inServizio) {
+		super(50, inServizio);
 	}
 }

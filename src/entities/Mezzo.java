@@ -35,7 +35,7 @@ public abstract class Mezzo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
-	private int capienza;
+	protected int capienza;
 	private boolean inServizio;
 
 	@OneToMany(mappedBy = "mezzo", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
