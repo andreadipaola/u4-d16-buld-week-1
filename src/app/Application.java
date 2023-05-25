@@ -3,6 +3,7 @@ package app;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -43,7 +44,7 @@ public class Application {
 		TrattaDao tr = new TrattaDao(em);
 
 		// ISTANZE DI CLASSI (OGGETTI)
-		Utente utente1 = new Utente("998JU6hsshsfeadoppl", "Gianluca", "Praticò", 29);
+		Utente utente1 = new Utente("198vc6hsshsfeadcppl", "Gianluca", "Praticò", 29);
 		ut.salvaUtente(utente1);
 
 		Tessera tessera1 = new Tessera(LocalDate.parse("2023-11-12"));
@@ -90,6 +91,10 @@ public class Application {
 
 		PuntoDiEmissione pfound = pe.findById("1c1dd74f-6321-4e50-9960-6ecaf8bfba2f");
 		Tessera tfound = te.findById("f880fe9e-593d-4cb0-8739-0c6634306469");
+		UUID id = UUID.fromString("339159e1-8215-4dfd-89f7-ad94fef36d05");
+		pe.bigliettiEmessi(id);
+
+		pe.abbonamentiEmessi(id);
 
 		tram1.getTratte().stream().forEach(t -> log.info(t.toString()));
 		log.info("------------------------------------------------------");
