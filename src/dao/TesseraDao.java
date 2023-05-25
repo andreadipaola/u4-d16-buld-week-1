@@ -1,5 +1,6 @@
 package dao;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 import javax.persistence.EntityManager;
@@ -22,14 +23,11 @@ public class TesseraDao {
 		t.begin();
 		em.persist(tessera);
 
-//		Query query = em.createNamedQuery("controllo_validita_tessera");
-//		query.executeUpdate();
-
 		t.commit();
 		log.info("Tessera salvata correttamente");
 	}
 
-	public void aggiornaValidita() {
+	public void verificaValidita() {
 		EntityTransaction t = em.getTransaction();
 		t.begin();
 
@@ -37,12 +35,39 @@ public class TesseraDao {
 		validita.executeUpdate();
 
 		t.commit();
-		log.info("Validità tessera aggiornata correttamente");
+		log.info("Validità tessera effettuata correttamente");
 	}
 
-	public Tessera findById(String id) {
-		Tessera found = em.find(Tessera.class, UUID.fromString(id));
-		return found;
+	/*
+	 * public Tessera findById(String id) { Tessera trovata = em.find(Tessera.class,
+	 * UUID.fromString(id)); return trovata;
+	 * 
+	 * }
+	 */
+
+	public void aggiornaValidita(UUID id) {
+		EntityTransaction t = em.getTransaction();
+
+		Tessera trovata = em.find(Tessera.class, id);
+		if (trovata != null) {
+			boolean validita = trovata.isValidita();
+			if (validita == true) {
+				log.info("tessera gia valida");
+				log.info("tessera trovata");
+
+			} else {
+				trovata.setValidita(true);
+				trovata.setDataScadenza(LocalDate.now().plusYears(1));
+				LocalDate dataScadenza = trovata.getDataScadenza();
+				t.begin();
+				em.persist(trovata);
+				t.commit();
+				log.info("tessera rinnovata correttamente.La nuova data di scadenza è : {}", dataScadenza);
+			}
+		} else {
+			log.info("tessera non trovata");
+			return;
+		}
 
 	}
 }

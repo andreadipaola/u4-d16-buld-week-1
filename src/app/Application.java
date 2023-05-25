@@ -48,9 +48,9 @@ public class Application {
 		Utente utente1 = new Utente("Gianluca", "Praticò", 29);
 		ut.salvaUtente(utente1);
 
-		Tessera tessera1 = new Tessera(LocalDate.parse("2023-11-12"));
+		Tessera tessera1 = new Tessera(LocalDate.parse("1998-11-12"));
 		te.salvaTessera(tessera1);
-		te.aggiornaValidita();
+		te.verificaValidita();
 
 		utente1.setTessera(tessera1);
 
@@ -100,10 +100,10 @@ public class Application {
 		tram1.setTratte(new HashSet<>(Arrays.asList(tratta1, tratta2, tratta3)));
 		tratta1.setMezzi(new HashSet<>(Arrays.asList(tram1, autobus2)));
 
-		PuntoDiEmissione pfound = pe.findById("1c1dd74f-6321-4e50-9960-6ecaf8bfba2f");
-		Tessera tfound = te.findById("f880fe9e-593d-4cb0-8739-0c6634306469");
+		PuntoDiEmissione pfound = pe.findById("021585fe-0ad7-4123-a44d-9a3ed3647cd6");
+		// Tessera tfound = te.findById("f880fe9e-593d-4cb0-8739-0c6634306469");
 
-		UUID id = UUID.fromString("3ee4df4a-ee6f-4d3f-b318-61fe0251d1b7");
+		UUID id = UUID.fromString("021585fe-0ad7-4123-a44d-9a3ed3647cd6");
 		int abbonamentiEmessi = pe.abbonamentiEmessi(id);
 		log.info("gli abbonamenti emessi sono: {}", abbonamentiEmessi);
 		int bigliettiEmessi = pe.bigliettiEmessi(id);
@@ -112,7 +112,8 @@ public class Application {
 		tram1.getTratte().stream().forEach(t -> log.info(t.toString()));
 		log.info("------------------------------------------------------");
 		tratta1.getMezzi().stream().forEach(m -> log.info(m.toString()));
-
+		UUID idTessera = UUID.fromString("06620da0-21d3-4577-946f-8a52cfa178a9");
+		te.aggiornaValidita(idTessera);
 //		if (pfound != null) {
 //		Biglietto biglietto1 = new Biglietto(pfound, LocalDate.parse("2012-11-12"), true, LocalDate.parse("2012-12-11"), autobus1);
 //			
