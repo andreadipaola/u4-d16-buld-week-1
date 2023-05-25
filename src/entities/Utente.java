@@ -28,15 +28,15 @@ public class Utente {
 	private UUID codiceFiscale;
 	private String nome;
 	private String cognome;
-	private int eta;
+	private String recapitoTelefonico;
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "tessera_id", referencedColumnName = "id")
 	private Tessera tessera;
 
-	public Utente(String nome, String cognome, int eta) {
+	public Utente(String nome, String cognome, String recapitoTelefonico) {
 		this.nome = nome;
 		this.cognome = cognome;
-		this.eta = eta;
+		this.recapitoTelefonico = recapitoTelefonico;
 
 	}
 }

@@ -1,7 +1,6 @@
 package entities;
 
 import java.time.LocalDate;
-import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -9,16 +8,13 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -39,13 +35,9 @@ public abstract class Mezzo {
 	protected int capienza;
 	@Column(name = "in_servizio")
 	private boolean inServizio;
-	@OneToMany(mappedBy = "mezzo", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//	@OrderBy("dataVidimazione DESC")
-	private Set<Biglietto> biglietti;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinTable(name = "mezzo_tratta", joinColumns = @JoinColumn(name = "mezzo_id"), inverseJoinColumns = @JoinColumn(name = "tratta_id"))
-//	private Set<Tratta> tratte;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "tratte_id", referencedColumnName = "tratta_id")
 	private Tratta tratta;
 
 	private String numero;
@@ -69,10 +61,11 @@ public abstract class Mezzo {
 		this.capienza = capienza;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "Mezzo [id=" + id + ", capienza=" + capienza + ", inServizio=" + inServizio + ", biglietti=" + biglietti
-//				+ ", tratte=" + tratte + "]";
-//	}
+	@Override
+	public String toString() {
+		return getClass().getSimpleName().toUpperCase() + " " + numero + " - Partenza: " + tratta.getPartenza()
+				+ " - Capolinea: " + tratta.getCapolinea() + " - Durata media della corsa: "
+				+ tratta.getTempoMedioPercorrenza();
+	}
 
 }

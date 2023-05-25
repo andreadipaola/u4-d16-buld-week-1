@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import entities.Abbonamento;
 import entities.Tessera;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,6 +26,15 @@ public class TesseraDao {
 
 		t.commit();
 		log.info("Tessera salvata correttamente");
+	}
+
+	public Tessera trovaTessera(UUID id) {
+		Tessera te = em.find(Tessera.class, id);
+
+		if (te == null) {
+			log.error("La tessera con id: " + id + " non è presente nel nostro database");
+		}
+		return te;
 	}
 
 	public void verificaValidita() {
@@ -70,4 +80,24 @@ public class TesseraDao {
 		}
 
 	}
+
+	public void aggiornaValiditaAbbonamento(UUID id, Abbonamento abbonamento) {
+		EntityTransaction t = em.getTransaction();
+		Tessera te = em.find(Tessera.class, id);
+
+		if (te == null) {
+			log.info("Errore, questo utente non esiste");
+			return;
+		}
+
+		try {
+			te.setAbbonamento(abbonamento);
+			t.begin();
+			em.persist(te);
+			t.commit();
+		} catch (Exception ex) {
+			log.error("ATTENZIONE!!! Abbonamento già attivo" + ex);
+		}
+	}
+
 }

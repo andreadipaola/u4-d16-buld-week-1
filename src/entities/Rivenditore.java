@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@DiscriminatorValue(value = "Rivenditori")
+@DiscriminatorValue(value = "Rivenditore")
+@NoArgsConstructor
 @Setter
 @Getter
-//@ToString
-@NoArgsConstructor
 public class Rivenditore extends PuntoDiEmissione {
-	public Rivenditore(boolean inAttivita) {
-		super(inAttivita);
+
+	public Rivenditore(int bigliettiEmessi, String luogo, int counterBiglietti, int abbonamentiEmessi) {
+		super(bigliettiEmessi, abbonamentiEmessi);
 	}
 }

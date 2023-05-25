@@ -2,11 +2,12 @@ package entities;
 
 import java.time.LocalDate;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -17,28 +18,25 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "abbonamenti")
+@DiscriminatorValue(value = "Abbonamento")
 @NoArgsConstructor
 @Setter
 @Getter
-//@ToString
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
-
+@NamedQuery(name = "controllaValiditaAbbonamento", query = "UPDATE Abbonamento SET validita = false WHERE dataScadenza < CURRENT_DATE")
 public class Abbonamento extends TitoloDiViaggio {
+
+	private boolean validita = true;
 	@Enumerated(EnumType.STRING)
 	private Periodicita periodicita;
-	@ManyToOne
-	@JoinColumn(name = "tessera_id", referencedColumnName = "id", nullable = false)
+	@OneToOne(mappedBy = "abbonamento")
 	private Tessera tessera;
 
-	public Abbonamento(PuntoDiEmissione puntoDiEmissione, LocalDate dataEmissione, Periodicita periodicita,
-			Tessera tessera) {
-		super(puntoDiEmissione, dataEmissione);
-		this.periodicita = periodicita;
+	public Abbonamento(Tessera tessera, LocalDate dataEmissione, LocalDate dataScadenza, boolean validita,
+			Periodicita periodicita) {
+		super(dataEmissione, dataScadenza);
 		this.tessera = tessera;
-	}
-
-	@Override
-	public String toString() {
-		return "Abbonamento [periodicita=" + periodicita + ", tessera_id=" + tessera.getId() + "]";
+		this.validita = validita;
+		this.periodicita = periodicita;
 	}
 }

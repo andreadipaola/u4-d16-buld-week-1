@@ -1,5 +1,6 @@
 package entities;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -9,13 +10,18 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
+@DiscriminatorValue("Distributore")
+@NoArgsConstructor
 @Setter
 @Getter
 @ToString
-@NoArgsConstructor
-@DiscriminatorValue(value = "Distributori")
 public class Distributore extends PuntoDiEmissione {
-	public Distributore(boolean inAttivita) {
-		super(inAttivita);
+	@Column(name = "in_servizio")
+	private boolean inServizio;
+
+	public Distributore(int bigliettiEmessi, String luogo, int counterBiglietti, int abbonamentiEmessi,
+			boolean inServizio) {
+		super(bigliettiEmessi, abbonamentiEmessi);
+		this.inServizio = inServizio;
 	}
 }

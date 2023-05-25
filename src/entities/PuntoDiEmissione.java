@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -13,7 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -29,25 +29,22 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-@NamedQuery(name = "controllo_servizio", query = "UPDATE PuntoDiEmissione SET inAttivita = false WHERE dataScadenza < CURRENT_DATE")
 public abstract class PuntoDiEmissione {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "punto_emissione")
-//	@SequenceGenerator(name = "punto_emissione", sequenceName = "punto_emissione", allocationSize = 1)
 	private UUID id;
-	private boolean inAttivita;
+	@Column(name = "biglietti_emessi")
 	private int bigliettiEmessi;
+	@Column(name = "abbonamenti_emessi")
 	private int abbonamentiEmessi;
 
 	@OneToMany(mappedBy = "puntoDiEmissione", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@OrderBy("puntoDiEmissione DESC")
 	private Set<TitoloDiViaggio> titoliDiViaggio;
 
-	public PuntoDiEmissione(boolean inAttivita) {
-		this.inAttivita = inAttivita;
-		this.bigliettiEmessi = 0;
-		this.abbonamentiEmessi = 0;
+	public PuntoDiEmissione(int bigliettiEmessi, int abbonamentiEmessi) {
+		this.bigliettiEmessi = bigliettiEmessi;
+		this.abbonamentiEmessi = abbonamentiEmessi;
 	}
 
 }
