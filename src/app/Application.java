@@ -43,11 +43,12 @@ public class Application {
 		TrattaDao tr = new TrattaDao(em);
 
 		// ISTANZE DI CLASSI (OGGETTI)
-		Utente utente1 = new Utente("998JU6hdehsfeadoass", "Gianluca", "Praticò", 29);
+		Utente utente1 = new Utente("998JU6hsshsfeadoppl", "Gianluca", "Praticò", 29);
 		ut.salvaUtente(utente1);
 
-		Tessera tessera1 = new Tessera(LocalDate.parse("2015-11-12"));
+		Tessera tessera1 = new Tessera(LocalDate.parse("2023-11-12"));
 		te.salvaTessera(tessera1);
+		te.aggiornaValidita();
 
 		utente1.setTessera(tessera1);
 

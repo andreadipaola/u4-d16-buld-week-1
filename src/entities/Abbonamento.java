@@ -22,8 +22,8 @@ import lombok.Setter;
 @Getter
 //@ToString
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
-public class Abbonamento extends TitoloDiViaggio {
 
+public class Abbonamento extends TitoloDiViaggio {
 	@Enumerated(EnumType.STRING)
 	private Periodicita periodicita;
 	@ManyToOne

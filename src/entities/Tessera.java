@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
@@ -25,27 +26,26 @@ import lombok.Setter;
 @Setter
 @Getter
 //@ToString
+@NamedQuery(name = "controllo_validita_tessera", query = "UPDATE Tessera SET validita = false WHERE dataScadenza < CURRENT_DATE")
 public class Tessera {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 	private LocalDate dataEmissione;
+	private LocalDate dataScadenza;
+	private boolean validita;
+
 	@OneToOne(mappedBy = "tessera")
 	private Utente utente;
 	@OneToMany(mappedBy = "tessera", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@OrderBy("tessera DESC")
 	private Set<Abbonamento> abbonamenti;
 
-	public LocalDate dataScadenzaFun(LocalDate dataEmissione) {
-
-		LocalDate dataScadenza = dataEmissione.plusYears(1);
-		return dataScadenza;
-
-	}
-
 	public Tessera(LocalDate dataEmissione) {
 		this.dataEmissione = dataEmissione;
+		this.dataScadenza = dataEmissione.plusYears(1);
+		this.validita = true;
 	}
 
 	@Override

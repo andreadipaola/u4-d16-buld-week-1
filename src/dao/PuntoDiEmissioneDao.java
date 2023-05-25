@@ -25,6 +25,28 @@ public class PuntoDiEmissioneDao {
 		log.info("Punto di emissione salvato correttamente");
 	}
 
+	public void bigliettiEmessi(int id) {
+		EntityTransaction t = em.getTransaction();
+		PuntoDiEmissione pe = em.find(PuntoDiEmissione.class, id);
+		int bigliettiEmessi = pe.getBigliettiEmessi() + 1;
+		pe.setBigliettiEmessi(bigliettiEmessi);
+		t.begin();
+		em.persist(pe);
+		t.commit();
+		log.info("biglietto aggiunto correttamente");
+	}
+
+	public void abbonamentiEmessi(int id) {
+		EntityTransaction t = em.getTransaction();
+		PuntoDiEmissione pe = em.find(PuntoDiEmissione.class, id);
+		int abbonamentiEmessi = pe.getAbbonamentiEmessi() + 1;
+		pe.setAbbonamentiEmessi(abbonamentiEmessi);
+		t.begin();
+		em.persist(pe);
+		t.commit();
+		log.info("abbonamento aggiunto correttamente");
+	}
+
 	public PuntoDiEmissione findById(String id) {
 		PuntoDiEmissione found = em.find(PuntoDiEmissione.class, UUID.fromString(id));
 		return found;

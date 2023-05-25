@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -28,6 +29,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
+@NamedQuery(name = "controllo_servizio", query = "UPDATE PuntoDiEmissione SET inAttivita = false WHERE dataScadenza < CURRENT_DATE")
 public abstract class PuntoDiEmissione {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,6 +37,8 @@ public abstract class PuntoDiEmissione {
 //	@SequenceGenerator(name = "punto_emissione", sequenceName = "punto_emissione", allocationSize = 1)
 	private UUID id;
 	private boolean inAttivita;
+	private int bigliettiEmessi;
+	private int abbonamentiEmessi;
 
 	@OneToMany(mappedBy = "puntoDiEmissione", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@OrderBy("puntoDiEmissione DESC")
@@ -42,6 +46,8 @@ public abstract class PuntoDiEmissione {
 
 	public PuntoDiEmissione(boolean inAttivita) {
 		this.inAttivita = inAttivita;
+		this.bigliettiEmessi = 0;
+		this.abbonamentiEmessi = 0;
 	}
 
 }
