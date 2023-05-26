@@ -15,6 +15,6 @@ import lombok.Setter;
 public class Rivenditore extends PuntoDiEmissione {
 
 	public Rivenditore(int bigliettiEmessi, String luogo, int counterBiglietti, int abbonamentiEmessi) {
-		super(bigliettiEmessi, abbonamentiEmessi);
+		super(bigliettiEmessi, abbonamentiEmessi, luogo);
 	}
 }

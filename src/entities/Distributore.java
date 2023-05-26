@@ -21,7 +21,7 @@ public class Distributore extends PuntoDiEmissione {
 
 	public Distributore(int bigliettiEmessi, String luogo, int counterBiglietti, int abbonamentiEmessi,
 			boolean inServizio) {
-		super(bigliettiEmessi, abbonamentiEmessi);
+		super(bigliettiEmessi, abbonamentiEmessi, luogo);
 		this.inServizio = inServizio;
 	}
 }

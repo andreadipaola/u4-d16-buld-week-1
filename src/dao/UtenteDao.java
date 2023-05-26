@@ -1,5 +1,6 @@
 package dao;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import entities.Utente;
@@ -7,7 +8,13 @@ import lombok.extern.slf4j.Slf4j;
 import utils.JpaUtil;
 
 @Slf4j
-public class UtenteDao extends JpaUtil {
+public class UtenteDao {
+	private EntityManager em;
+
+	public UtenteDao() {
+		em = JpaUtil.getEntityManager();
+	}
+
 	public void salvaUtente(Utente utente) {
 		EntityTransaction t = em.getTransaction();
 		try {

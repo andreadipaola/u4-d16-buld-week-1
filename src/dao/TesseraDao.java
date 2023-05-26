@@ -3,6 +3,8 @@ package dao;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import entities.Abbonamento;
@@ -11,10 +13,15 @@ import lombok.extern.slf4j.Slf4j;
 import utils.JpaUtil;
 
 @Slf4j
-public class TesseraDao extends JpaUtil {
+public class TesseraDao {
+	private EntityManager em;
+
+	public TesseraDao() {
+		em = JpaUtil.getEntityManager();
+	}
 
 	public void salvaTessera(Tessera tessera) {
-
+		EntityTransaction t = em.getTransaction();
 		t.begin();
 		em.persist(tessera);
 
@@ -23,7 +30,7 @@ public class TesseraDao extends JpaUtil {
 	}
 
 	public void controllaValiditaTessera() {
-
+		EntityTransaction t = em.getTransaction();
 		t.begin();
 		Query query = em.createNamedQuery("controllo_validita_tessera");
 		query.executeUpdate();
@@ -79,6 +86,7 @@ public class TesseraDao extends JpaUtil {
 			log.error("ATTENZIONE!!! La tessera che sta cercando di rinnovare è in corso di validita fino al: "
 					+ te.getDataScadenza());
 		} else {
+			EntityTransaction t = em.getTransaction();
 			te.setValidita(true);
 			te.setDataScadenza(LocalDate.now().plusYears(1));
 
@@ -102,6 +110,7 @@ public class TesseraDao extends JpaUtil {
 		}
 
 		try {
+			EntityTransaction t = em.getTransaction();
 			te.setAbbonamento(abbonamento);
 			t.begin();
 			em.persist(te);

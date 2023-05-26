@@ -37,14 +37,16 @@ public abstract class PuntoDiEmissione {
 	private int bigliettiEmessi;
 	@Column(name = "abbonamenti_emessi")
 	private int abbonamentiEmessi;
+	String luogo;
 
 	@OneToMany(mappedBy = "puntoDiEmissione", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@OrderBy("puntoDiEmissione DESC")
 	private Set<TitoloDiViaggio> titoliDiViaggio;
 
-	public PuntoDiEmissione(int bigliettiEmessi, int abbonamentiEmessi) {
+	public PuntoDiEmissione(int bigliettiEmessi, int abbonamentiEmessi, String luogo) {
 		this.bigliettiEmessi = bigliettiEmessi;
 		this.abbonamentiEmessi = abbonamentiEmessi;
+		this.luogo = luogo;
 	}
 
 }

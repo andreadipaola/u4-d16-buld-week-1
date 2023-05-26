@@ -40,9 +40,9 @@ public class Tessera {
 //	@OrderBy("tessera DESC")
 	private Abbonamento abbonamento;
 
-	public Tessera(LocalDate dataEmissione) {
+	public Tessera(LocalDate dataEmissione, LocalDate dataScadenza) {
 		this.dataEmissione = dataEmissione;
-		this.dataScadenza = dataEmissione.plusYears(1);
+		this.dataScadenza = dataEmissione;
 		this.validita = true;
 	}
 }
