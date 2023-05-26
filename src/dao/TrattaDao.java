@@ -26,7 +26,7 @@ public class TrattaDao {
 			t.begin();
 			em.persist(tr);
 			t.commit();
-			log.info("Mezzo salvato correttamente");
+			log.info("Tratta salvata correttamente");
 		} catch (Exception ex) {
 			log.error("ATTENZIONE!!! C'é stato un errore nell'inserimento della tratta " + ex);
 		}

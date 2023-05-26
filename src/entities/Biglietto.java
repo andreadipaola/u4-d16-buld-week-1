@@ -26,7 +26,7 @@ public class Biglietto extends TitoloDiViaggio {
 	private Mezzo mezzo;
 
 	public Biglietto(LocalDate dataEmissione, LocalDate dataScadenza, boolean timbrato, LocalDate dataTimbratura) {
-		super(dataEmissione, dataEmissione);
+		super(dataEmissione, dataScadenza);
 		this.timbrato = timbrato;
 		this.dataTimbratura = dataTimbratura;
 	}

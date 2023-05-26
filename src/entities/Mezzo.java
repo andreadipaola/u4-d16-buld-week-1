@@ -21,14 +21,14 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "mezzi")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "tipo_di_mezzo", discriminatorType = DiscriminatorType.STRING)
 @NoArgsConstructor
 @Setter
 @Getter
 public abstract class Mezzo {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	protected int capienza;
 	@Column(name = "in_servizio")

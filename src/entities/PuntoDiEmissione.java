@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,14 +22,14 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "punto_di_emissione")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "tipo_di_rivenditore", discriminatorType = DiscriminatorType.STRING)
 @NoArgsConstructor
 @Setter
 @Getter
 public abstract class PuntoDiEmissione {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@Column(name = "biglietti_emessi")
 	private int bigliettiEmessi;
@@ -38,7 +37,7 @@ public abstract class PuntoDiEmissione {
 	private int abbonamentiEmessi;
 	String luogo;
 
-	@OneToMany(mappedBy = "puntoDiEmissione", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "puntoDiEmissione", cascade = CascadeType.ALL)
 	@OrderBy("puntoDiEmissione DESC")
 	private Set<TitoloDiViaggio> titoliDiViaggio;
 

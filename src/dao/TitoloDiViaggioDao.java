@@ -30,7 +30,7 @@ public class TitoloDiViaggioDao {
 			t.commit();
 			log.info("Titolo di viaggio salvato correttamente");
 		} catch (Exception ex) {
-			log.error("ATTENZIONE!!! C'é stato un errore nell'inserimento del titolo di viaggio" + ex);
+			log.error("ATTENZIONE!!! C'é stato un errore nell'inserimento del titolo di viaggio " + ex);
 		}
 
 	}

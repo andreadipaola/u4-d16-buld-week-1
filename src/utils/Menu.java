@@ -29,11 +29,6 @@ import lombok.extern.slf4j.Slf4j;
 public class Menu {
 
 	static Scanner sc = new Scanner(System.in);
-	static final String ANSI_RESET = "\u001B[0m";
-	static final String ANSI_RED = "\u001B[31m";
-	static final String ANSI_GREEN = "\033[0;32m";
-	static final String ANSI_YELLOW = "\033[1;33m";
-	static final String ANSI_BACKGROUND = "\u001B[41m";
 	static int selezione;
 	static int selectMezzo;
 	static long nTessera;
@@ -55,20 +50,22 @@ public class Menu {
 			titoloDao.controllaValiditaAbbonamento();
 
 			try {
-				System.out.println("Benvenuto a Roma!");
 				System.out.println("-------------------------------------------");
-				System.out.println("1 - Stazione Tiburtina");
-				System.out.println("2 - Stazione Termini");
-				System.out.println(ANSI_GREEN + "Da che stazione vuoi partire? <---" + ANSI_RESET);
+				System.out.println("Seleziona il tuo punto di partenza: ");
+				System.out.println(" 1 - Piazza Mancini");
+				System.out.println(" 2 - Piazza Thorwaldsen");
+				System.out.println(" 3 - Piazza Venezia");
 				selezione = sc.nextInt();
 
 				switch (selezione) {
 				case (1):
-//					TitoloDiViaggioDao.checkDistributore(1);
+					System.out.println("Benvenuto dal punto vendita di Piazza Mancini");
 					break;
 				case (2):
-					System.out.println("Hai scelto Stazione Termini");
-					System.out.println("Benvenuto dal rivenditore");
+					System.out.println("Benvenuto dal punto vendita di Piazza Thorwaldsen");
+					break;
+				case (3):
+					System.out.println("Benvenuto dal punto vendita di Piazza Venezia");
 					break;
 				default:
 					log.error("Valore non presente nella lista!");
@@ -76,10 +73,10 @@ public class Menu {
 					break;
 				}
 
-				System.out.println("1 - Gestione tessera");
-				System.out.println("2 - Acquista titolo di viaggio");
-				System.out.println("3 - Sali a bordo di:");
-				System.out.println(ANSI_GREEN + "Cosa vuoi fare? <---" + ANSI_RESET);
+				System.out.println(" 1  Gestione tessera");
+				System.out.println(" 2  Acquista titolo di viaggio");
+				System.out.println(" 3  Scegli un mezzo");
+				System.out.println("Cosa scegli di fare?");
 
 				int selezione2 = sc.nextInt();
 				sc.nextLine();
@@ -99,12 +96,12 @@ public class Menu {
 					System.exit(0);
 					break;
 				}
-			} catch (InputMismatchException e) {
+			} catch (InputMismatchException ex) {
 				log.error("Inserisci un valore corretto");
 			}
 
-			System.out.println(ANSI_RED + "-------------------------------------------" + ANSI_RESET);
-			System.out.println("Vuoi continuare? Digita 'S' per si o qualunque altro carattere per uscire");
+			System.out.println("-------------------------------------------");
+			System.out.println("Digita 'S' per continuare o qualunque altro carattere per uscire");
 			sc.nextLine();
 			String input = sc.nextLine();
 			attivo = input.equalsIgnoreCase("S");
@@ -114,9 +111,8 @@ public class Menu {
 	// METODO CREAZIONE DISTRIBUTORE
 	public static Distributore saveDistributore() {
 		Distributore d = new Distributore();
-//		d.setCounterBiglietti(100);
 		d.setInServizio(true);
-		d.setLuogo("Stazione Tiburtina");
+		d.setLuogo("Piazza Mancini");
 
 		PuntoDiEmissioneDao ped = new PuntoDiEmissioneDao();
 		ped.salvaPuntoEmissione(d);
@@ -126,8 +122,7 @@ public class Menu {
 	// METODO CREAZIONE RIVENDITORE
 	public static Rivenditore saveRivenditore() {
 		Rivenditore r = new Rivenditore();
-//		r.setCounterBiglietti(50);
-		r.setLuogo("Stazione Termini");
+		r.setLuogo("Piazza Venezia");
 
 		PuntoDiEmissioneDao ped = new PuntoDiEmissioneDao();
 		ped.salvaPuntoEmissione(r);
@@ -136,11 +131,11 @@ public class Menu {
 
 	// MEDOTI DI GESTIONE TESSERA (ACQUISTO, VERIFICA DATI E RINNOVO)
 	public static void gestioneTessera() {
-		System.out.println("Benvenuto nella gestione tessera <---");
-		System.out.println("1 - Crea tessera");
-		System.out.println("2 - Verifica dati tessera");
-		System.out.println("3 - Rinnova tessera");
-		System.out.println(ANSI_GREEN + "Cosa vuoi fare? <---" + ANSI_RESET);
+		System.out.println("GESTIONE TESSERA");
+		System.out.println(" 1 - Crea tessera");
+		System.out.println(" 2 - Verifica dati tessera");
+		System.out.println(" 3 - Rinnova tessera");
+		System.out.println("Cosa scegli di fare?");
 		int selezione4 = sc.nextInt();
 
 		switch (selezione4) {
@@ -160,19 +155,19 @@ public class Menu {
 	}
 
 	public static void acquistaTessera() {
-		System.out.println("Inserisci il tuo nome");
+		System.out.println("Inserisci il tuo nome: ");
 		String nome = sc.next();
 
-		System.out.println("Inserisci il tuo cognome");
+		System.out.println("Inserisci il tuo cognome: ");
 		String cognome = sc.next();
 
-		System.out.println("Inserisci il tuo contatto telefonico");
+		System.out.println("Inserisci il tuo recapito telefonico: ");
 		String telefono = sc.next();
 
-		saveTessera(LocalDate.now(), LocalDate.now().plusYears(1));
+		salvaTessera(LocalDate.now(), LocalDate.now().plusYears(1));
 	}
 
-	public static Tessera saveTessera(LocalDate dataEmissione, LocalDate dataScadenza) {
+	public static Tessera salvaTessera(LocalDate dataEmissione, LocalDate dataScadenza) {
 		Tessera t = new Tessera(dataEmissione, dataScadenza);
 
 		TesseraDao td = new TesseraDao();
@@ -203,14 +198,16 @@ public class Menu {
 	public static void acquistaTitoloDiViaggio() {
 		System.out.println("1 - Biglietto ordinario");
 		System.out.println("2 - Abbonamento");
-		System.out.println(ANSI_GREEN + "Scegli cosa comprare <---" + ANSI_RESET);
+		System.out.println("Scegli cosa comprare");
 		int selezione3 = sc.nextInt();
 
 		switch (selezione3) {
 		case (1):
+			log.error("hai selezioanto: " + selezione3);
 			saveBiglietto();
 			break;
 		case (2):
+			log.error("hai selezioanto: " + selezione3);
 			acquistaAbbonamento();
 			break;
 		default:
@@ -221,14 +218,14 @@ public class Menu {
 
 	// METODI GESTIONE UTENTE (CREAZIONE, MODIFICA, RECUPERO DA ID)
 	public static Utente saveUtente() {
-		Utente u = new Utente("Mario", "Rossi", "mario.rossi@gmail.com");
+		Utente u = new Utente("Mario", "Rossi", "333-123456");
 
 		UtenteDao utenteDao = new UtenteDao();
 		utenteDao.salvaUtente(u);
 		return u;
 	}
 
-	public static void updateUtente(long numeroTessera, Abbonamento abbonamento) {
+	public static void aggiornaAbbonamento(long numeroTessera, Abbonamento abbonamento) {
 		TesseraDao tesseraDao = new TesseraDao();
 		tesseraDao.aggiornaValiditaAbbonamento(numeroTessera, abbonamento);
 	}
@@ -246,17 +243,19 @@ public class Menu {
 
 		TitoloDiViaggioDao tvd = new TitoloDiViaggioDao();
 		tvd.salvaTitoloDiViaggio(b);
-//		PuntoDiEmissioneDao.countBiglietti(selezione);
+
+		PuntoDiEmissioneDao ped = new PuntoDiEmissioneDao();
+		ped.bigliettiEmessi(selezione);
 	}
 
 //	 METODI ABBONAMENTO (CREAZIONE, VERIFICA ABBONAMENTO ATTIVO)
 	public static void acquistaAbbonamento() {
 		System.out.println("Inserisci il tuo numero tessera");
-		long numeroTessera = sc.nextLong();
+		long nTessera = sc.nextLong();
 		sc.nextLine();
 
 		TitoloDiViaggioDao tvd = new TitoloDiViaggioDao();
-		tvd.controllaValiditaTessera(numeroTessera);
+		tvd.controllaValiditaTessera(nTessera);
 		creaAbbonamento();
 	}
 
@@ -267,7 +266,7 @@ public class Menu {
 		TitoloDiViaggioDao tvd = new TitoloDiViaggioDao();
 		tvd.salvaTitoloDiViaggio(a);
 
-		updateUtente(nTessera, a);
+		aggiornaAbbonamento(nTessera, a);
 		PuntoDiEmissioneDao ped = new PuntoDiEmissioneDao();
 		ped.abbonamentiEmessi(selezione);
 	}
@@ -276,72 +275,76 @@ public class Menu {
 		EntityManager em = JpaUtil.getEntityManager();
 
 		Tessera te = em.find(Tessera.class, nTessera);
-		if (te.getAbbonamento() != null) {
-			boolean validita = te.getAbbonamento().isValidita();
-			if (validita == true) {
-				System.out.println("Hai già un abbonamento attivo, impossibile crearne un altro");
-				System.exit(0);
-			} else {
-				long id = te.getAbbonamento().getId();
+		if (te != null) {
+			if (te.getAbbonamento() != null) {
+				boolean validita = te.getAbbonamento().isValidita();
+				if (validita == true) {
+					System.out.println("Hai già un abbonamento attivo, impossibile crearne un altro");
+					System.exit(0);
+				} else {
+					long id = te.getAbbonamento().getId();
 
-				System.out.println("Rinnova Abbonamento: ");
-				System.out.println("1 - Settimanale");
-				System.out.println("2 - Mensile");
+					System.out.println("Rinnova Abbonamento: ");
+					System.out.println(" 1 - Settimanale");
+					System.out.println(" 2 - Mensile");
+					int periodo = sc.nextInt();
+
+					switch (periodo) {
+					case (1):
+						EntityTransaction t = em.getTransaction();
+						Abbonamento a = em.find(Abbonamento.class, id);
+						a.setDataEmissione(LocalDate.now());
+						a.setDataScadenza(LocalDate.now().plusWeeks(1));
+						a.setValidita(true);
+						a.setPeriodicita(Periodicita.SETTIMANALE);
+
+						t.begin();
+						em.persist(a);
+						t.commit();
+
+						aggiornaAbbonamento(nTessera, a);
+						break;
+					case (2):
+						Abbonamento ab = em.find(Abbonamento.class, id);
+						ab.setDataEmissione(LocalDate.now());
+						ab.setDataScadenza(LocalDate.now().plusMonths(1));
+						ab.setValidita(true);
+						ab.setPeriodicita(Periodicita.MENSILE);
+
+						EntityTransaction t2 = em.getTransaction();
+						t2.begin();
+						em.persist(ab);
+						t2.commit();
+
+						aggiornaAbbonamento(nTessera, ab);
+						break;
+					default:
+						log.error("Valore non presente nella lista!");
+						break;
+					}
+					System.out.println("Abbonamento rinnovata!");
+				}
+			} else if (te.getAbbonamento() == null) {
+				System.out.println(" 1 - Settimanale");
+				System.out.println(" 2 - Mensile");
 				int periodo = sc.nextInt();
 
 				switch (periodo) {
 				case (1):
-					EntityTransaction t = em.getTransaction();
-					Abbonamento a = em.find(Abbonamento.class, id);
-					a.setDataEmissione(LocalDate.now());
-					a.setDataScadenza(LocalDate.now().plusWeeks(1));
-					a.setValidita(true);
-					a.setPeriodicita(Periodicita.SETTIMANALE);
-
-					t.begin();
-					em.persist(a);
-					t.commit();
-
-					updateUtente(nTessera, a);
+					saveAbbonamento(trovaTessera(nTessera), LocalDate.now(), LocalDate.now().plusWeeks(1), true,
+							Periodicita.SETTIMANALE);
 					break;
 				case (2):
-					Abbonamento ab = em.find(Abbonamento.class, id);
-					ab.setDataEmissione(LocalDate.now());
-					ab.setDataScadenza(LocalDate.now().plusMonths(1));
-					ab.setValidita(true);
-					ab.setPeriodicita(Periodicita.MENSILE);
-
-					EntityTransaction t2 = em.getTransaction();
-					t2.begin();
-					em.persist(ab);
-					t2.commit();
-
-					updateUtente(nTessera, ab);
+					saveAbbonamento(trovaTessera(nTessera), LocalDate.now(), LocalDate.now().plusMonths(1), true,
+							Periodicita.MENSILE);
 					break;
 				default:
 					log.error("Valore non presente nella lista!");
 					break;
 				}
-				System.out.println("Abbonamento rinnovata!");
 			}
-		} else if (te.getAbbonamento() == null) {
-			System.out.println("1 - Settimanale");
-			System.out.println("2 - Mensile");
-			int periodo = sc.nextInt();
-
-			switch (periodo) {
-			case (1):
-				saveAbbonamento(trovaTessera(nTessera), LocalDate.now(), LocalDate.now().plusWeeks(1), true,
-						Periodicita.SETTIMANALE);
-				break;
-			case (2):
-				saveAbbonamento(trovaTessera(nTessera), LocalDate.now(), LocalDate.now().plusMonths(1), true,
-						Periodicita.MENSILE);
-				break;
-			default:
-				log.error("Valore non presente nella lista!");
-				break;
-			}
+		} else {
+			log.error("C'è stato un errore nel reperimento della tessera!");
 		}
 	}
 
@@ -352,7 +355,7 @@ public class Menu {
 			String jpql = "SELECT m FROM Mezzo m JOIN m.tratta t WHERE t.partenza = :partenza AND m.inServizio = true";
 
 			TypedQuery<Mezzo> query = em.createQuery(jpql, Mezzo.class);
-			query.setParameter("partenza", "Stazione Tiburtina");
+			query.setParameter("partenza", "Piazza Mancini");
 
 			List<Mezzo> mezzi = query.getResultList();
 
@@ -364,9 +367,9 @@ public class Menu {
 				System.out.println(mezzoId + " - " + v);
 			}
 
-			System.out.println(ANSI_GREEN + "Scegli su che mezzo viaggiare <---" + ANSI_RESET);
+			System.out.println("Scegli su che mezzo viaggiare");
 			selectMezzo = sc.nextInt();
-			boolean mezzoEsistente = false;
+			boolean mezzoEsistente = true;
 
 			for (int i = 0; i < mezzi.size(); i++) {
 				v = mezzi.get(i);
@@ -379,7 +382,7 @@ public class Menu {
 			}
 
 			if (mezzoEsistente) {
-				Mezzo m = em.find(Mezzo.class, selectMezzo);
+				Mezzo m = em.find(Mezzo.class, (long) selectMezzo);
 				System.out.println("Sei salito su " + m.getClass().getSimpleName().toUpperCase() + " " + m.getNumero());
 				convalidaTitolo();
 				TrattaDao td = new TrattaDao();
@@ -391,7 +394,7 @@ public class Menu {
 			String jpql = "SELECT m FROM Mezzo m JOIN m.tratta t WHERE t.partenza = :partenza  AND m.inServizio = true";
 
 			TypedQuery<Mezzo> query = em.createQuery(jpql, Mezzo.class);
-			query.setParameter("partenza", "Stazione Termini");
+			query.setParameter("partenza", "Piazza venezia");
 
 			List<Mezzo> mezzi = query.getResultList();
 
@@ -403,7 +406,7 @@ public class Menu {
 				System.out.println(mezzoId + " - " + v);
 			}
 
-			System.out.println(ANSI_GREEN + "Scegli su che mezzo viaggiare <---" + ANSI_RESET);
+			System.out.println("Scegli su che mezzo viaggiare");
 			selectMezzo = sc.nextInt();
 			boolean mezzoEsistente = false;
 
@@ -418,7 +421,7 @@ public class Menu {
 			}
 
 			if (mezzoEsistente) {
-				Mezzo m = em.find(Mezzo.class, selectMezzo);
+				Mezzo m = em.find(Mezzo.class, (long) selectMezzo);
 				System.out.println("Sei salito su " + m.getClass().getSimpleName().toUpperCase() + " " + m.getNumero());
 				convalidaTitolo();
 				TrattaDao td = new TrattaDao();

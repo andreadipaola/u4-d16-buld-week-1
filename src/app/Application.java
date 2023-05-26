@@ -3,6 +3,7 @@ package app;
 import java.time.LocalDate;
 
 import dao.MezzoDao;
+import dao.PuntoDiEmissioneDao;
 import dao.TitoloDiViaggioDao;
 import entities.Abbonamento;
 import utils.GestioneTrasporti;
@@ -20,7 +21,8 @@ public class Application {
 
 		TitoloDiViaggioDao tvd = new TitoloDiViaggioDao();
 		tvd.contaTitoliEmessi(Abbonamento.class, LocalDate.now(), LocalDate.now().plusDays(30));
-//		PuntoDiEmissioneDao.getTitoliEmessi(1);
+		PuntoDiEmissioneDao ped = new PuntoDiEmissioneDao();
+		ped.getTitoliEmessi(1);
 		MezzoDao md = new MezzoDao();
 		md.contaBigliettiTimbrati(LocalDate.now(), LocalDate.now().plusDays(30));
 

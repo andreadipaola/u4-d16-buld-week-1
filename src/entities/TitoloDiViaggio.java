@@ -3,6 +3,8 @@ package entities;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +22,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "titoli_di_viaggio")
 @Inheritance(strategy = InheritanceType.JOINED)
-//@DiscriminatorColumn(name = "tipo_di_titolo", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "tipo_di_titolo", discriminatorType = DiscriminatorType.STRING)
 @NoArgsConstructor
 @Getter
 @Setter
