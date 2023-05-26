@@ -31,7 +31,23 @@ public class MezzoDao {
 		}
 	}
 
-	public void contaNumeroCorse(UUID id) {
+	public void contaBigliettiVidimati(LocalDate dataInizioControllo, LocalDate dataFineControllo) {
+		try {
+			Query query = em.createQuery(
+					"SELECT SUM(m.bigliettiTimbrati) FROM Mezzo m WHERE EXISTS (SELECT b FROM Biglietto b WHERE b.dataTimbratura BETWEEN :dataInizioControllo AND :dataFineControllo AND m.id = b.mezzo)");
+			query.setParameter("dataInizioControllo", dataInizioControllo);
+			query.setParameter("dataFineControllo", dataFineControllo);
+
+			String bigliettiTimbrati = query.getSingleResult().toString();
+
+			log.info("Dal " + dataInizioControllo + " al " + dataFineControllo + " sono stati timbrati: "
+					+ bigliettiTimbrati + "biglietti");
+		} catch (Exception ex) {
+			log.error("ATTENZIONE!! Nel periodo inserito non è stato trovato alcun biglietto timbrato " + ex);
+		}
+	}
+
+	public void aggiornaNumeroCorse(UUID id) {
 		EntityTransaction t = em.getTransaction();
 		Mezzo m = em.find(Mezzo.class, id);
 		int corse = m.getNumeroCorse() + 1;
@@ -60,5 +76,4 @@ public class MezzoDao {
 		query.executeUpdate();
 		t.commit();
 	}
-
 }

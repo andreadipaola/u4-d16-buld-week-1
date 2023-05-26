@@ -42,8 +42,8 @@ public abstract class Mezzo {
 
 	private String numero;
 
-	@Column(name = "biglietti_vidimati")
-	private int bigliettiVidimati;
+	@Column(name = "biglietti_timbrati")
+	private int bigliettiTimbrati;
 
 	@Column(name = "numero_corse")
 	private int numeroCorse;

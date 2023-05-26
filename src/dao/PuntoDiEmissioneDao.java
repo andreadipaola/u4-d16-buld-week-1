@@ -19,39 +19,54 @@ public class PuntoDiEmissioneDao {
 
 	public void salvaPuntoEmissione(PuntoDiEmissione pe) {
 		EntityTransaction t = em.getTransaction();
-		t.begin();
-		em.persist(pe);
-		t.commit();
-		log.info("Punto di emissione salvato correttamente");
+		try {
+			t.begin();
+			em.persist(pe);
+			t.commit();
+			log.info("Punto di emissione salvato correttamente");
+		} catch (Exception ex) {
+			log.error("ATTENZIONE!!! C'é stato un errore nell'inserimento del punto di emissione " + ex);
+		}
 	}
 
-	public int bigliettiEmessi(UUID id) {
+	public void bigliettiEmessi(UUID id) {
 		EntityTransaction t = em.getTransaction();
 		PuntoDiEmissione pe = em.find(PuntoDiEmissione.class, id);
 		int bigliettiEmessi = pe.getBigliettiEmessi() + 1;
-		pe.setBigliettiEmessi(bigliettiEmessi);
-		t.begin();
-		em.persist(pe);
-		t.commit();
-		log.info("biglietto aggiunto correttamente");
-		return bigliettiEmessi;
+		try {
+			pe.setBigliettiEmessi(bigliettiEmessi);
+			t.begin();
+			em.persist(pe);
+			t.commit();
+		} catch (Exception ex) {
+			log.error("ATTENZIONE!!! C'é stato un errore nel conteggio dei biglietti emessi" + ex);
+		}
+
 	}
 
-	public int abbonamentiEmessi(UUID id) {
+	public void abbonamentiEmessi(UUID id) {
 		EntityTransaction t = em.getTransaction();
 		PuntoDiEmissione pe = em.find(PuntoDiEmissione.class, id);
 		int abbonamentiEmessi = pe.getAbbonamentiEmessi() + 1;
-		pe.setAbbonamentiEmessi(abbonamentiEmessi);
-		t.begin();
-		em.persist(pe);
-		t.commit();
-		log.info("abbonamento aggiunto correttamente");
-		return abbonamentiEmessi;
+		try {
+			pe.setAbbonamentiEmessi(abbonamentiEmessi);
+			t.begin();
+			em.persist(pe);
+			t.commit();
+		} catch (Exception ex) {
+			log.error("ATTENZIONE!!! C'é stato un errore nel conteggio degli abbonamenti emessi" + ex);
+		}
+
 	}
 
-	public PuntoDiEmissione findById(String id) {
-		PuntoDiEmissione found = em.find(PuntoDiEmissione.class, UUID.fromString(id));
-		return found;
+	public void getTitoliEmessi(UUID id) {
+		PuntoDiEmissione pe = em.find(PuntoDiEmissione.class, id);
+
+		int bigliettiEmessi = pe.getBigliettiEmessi();
+		int abbonamentiEmessi = pe.getAbbonamentiEmessi();
+
+		log.info("Il punto di emissione con id:  " + id + " ha emesso: " + bigliettiEmessi + " biglietti e "
+				+ abbonamentiEmessi);
 	}
 
 }
