@@ -2,23 +2,13 @@ package dao;
 
 import java.util.UUID;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-
 import entities.PuntoDiEmissione;
 import lombok.extern.slf4j.Slf4j;
+import utils.JpaUtil;
 
 @Slf4j
-public class PuntoDiEmissioneDao {
-	private final EntityManager em;
-
-	public PuntoDiEmissioneDao(EntityManager em) {
-		this.em = em;
-
-	}
-
+public class PuntoDiEmissioneDao extends JpaUtil {
 	public void salvaPuntoEmissione(PuntoDiEmissione pe) {
-		EntityTransaction t = em.getTransaction();
 		try {
 			t.begin();
 			em.persist(pe);
@@ -30,7 +20,6 @@ public class PuntoDiEmissioneDao {
 	}
 
 	public void bigliettiEmessi(UUID id) {
-		EntityTransaction t = em.getTransaction();
 		PuntoDiEmissione pe = em.find(PuntoDiEmissione.class, id);
 		int bigliettiEmessi = pe.getBigliettiEmessi() + 1;
 		try {
@@ -45,7 +34,6 @@ public class PuntoDiEmissioneDao {
 	}
 
 	public void abbonamentiEmessi(UUID id) {
-		EntityTransaction t = em.getTransaction();
 		PuntoDiEmissione pe = em.find(PuntoDiEmissione.class, id);
 		int abbonamentiEmessi = pe.getAbbonamentiEmessi() + 1;
 		try {

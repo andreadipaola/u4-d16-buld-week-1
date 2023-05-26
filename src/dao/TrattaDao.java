@@ -3,24 +3,14 @@ package dao;
 import java.util.Random;
 import java.util.UUID;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-
 import entities.Mezzo;
 import entities.Tratta;
 import lombok.extern.slf4j.Slf4j;
+import utils.JpaUtil;
 
 @Slf4j
-public class TrattaDao {
-	private final EntityManager em;
-
-	public TrattaDao(EntityManager em) {
-		this.em = em;
-
-	}
-
+public class TrattaDao extends JpaUtil {
 	public void salvaTratta(Tratta tr) {
-		EntityTransaction t = em.getTransaction();
 		try {
 			t.begin();
 			em.persist(tr);

@@ -3,7 +3,6 @@ package dao;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
@@ -13,15 +12,10 @@ import entities.Mezzo;
 import entities.Tessera;
 import entities.TitoloDiViaggio;
 import lombok.extern.slf4j.Slf4j;
+import utils.JpaUtil;
 
 @Slf4j
-public class TitoloDiViaggioDao {
-	private final EntityManager em;
-
-	public TitoloDiViaggioDao(EntityManager em) {
-		this.em = em;
-	}
-
+public class TitoloDiViaggioDao extends JpaUtil {
 	public void salvaTitoloDiViaggio(TitoloDiViaggio tv) {
 		try {
 			EntityTransaction t = em.getTransaction();
@@ -57,7 +51,7 @@ public class TitoloDiViaggioDao {
 		}
 	}
 
-	public void contaTitoliEmessi(Class<?> classe, LocalDate dataInizioControllo, LocalDate dataFineControllo) {
+	public static void contaTitoliEmessi(Class<?> classe, LocalDate dataInizioControllo, LocalDate dataFineControllo) {
 		Query query = em.createQuery("SELECT COUNT(*) FROM " + classe.getName()
 				+ " WHERE dataEmissione BETWEEN :dataInizioControllo AND :dataFineControllo");
 		query.setParameter("dataInizioControllo", dataInizioControllo);
@@ -98,7 +92,7 @@ public class TitoloDiViaggioDao {
 				t.commit();
 
 				log.info("Biglietto timbrato correttamente. Le auguriamo buon viaggio");
-//				MezzoDao.aggiornaNumeroCorse(idMezzo);
+				MezzoDao.aggiornaNumeroCorse(idMezzo);
 
 			} else {
 				log.error(
@@ -110,7 +104,7 @@ public class TitoloDiViaggioDao {
 
 			if (validita.isAfter(LocalDate.now())) {
 				log.info("Abbonamento in corso di validità. Le auguriamo buon viaggio");
-//				MezzoDao.aggiornaNumeroCorse(idMezzo);
+				MezzoDao.aggiornaNumeroCorse(idMezzo);
 			} else {
 				log.error(
 						"ATTEZNIONE!!! Abbonamento non valido. Per effettuare la corsa ha bisogno di un nuovo biglietto o di un abbonamento in corso di validità");

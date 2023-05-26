@@ -3,24 +3,18 @@ package dao;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import entities.Abbonamento;
 import entities.Tessera;
 import lombok.extern.slf4j.Slf4j;
+import utils.JpaUtil;
 
 @Slf4j
-public class TesseraDao {
-	private final EntityManager em;
-
-	public TesseraDao(EntityManager em) {
-		this.em = em;
-	}
+public class TesseraDao extends JpaUtil {
 
 	public void salvaTessera(Tessera tessera) {
-		EntityTransaction t = em.getTransaction();
+
 		t.begin();
 		em.persist(tessera);
 
@@ -29,7 +23,7 @@ public class TesseraDao {
 	}
 
 	public void controllaValiditaTessera() {
-		EntityTransaction t = em.getTransaction();
+
 		t.begin();
 		Query query = em.createNamedQuery("controllo_validita_tessera");
 		query.executeUpdate();
@@ -71,7 +65,7 @@ public class TesseraDao {
 	}
 
 	public void rinnovaTessera(UUID id) {
-		EntityTransaction t = em.getTransaction();
+
 		Tessera te = em.find(Tessera.class, id);
 
 		if (te == null) {
@@ -99,7 +93,7 @@ public class TesseraDao {
 
 	// DA CONTROLLARE
 	public void aggiornaValiditaAbbonamento(UUID id, Abbonamento abbonamento) {
-		EntityTransaction t = em.getTransaction();
+
 		Tessera te = em.find(Tessera.class, id);
 
 		if (te == null) {

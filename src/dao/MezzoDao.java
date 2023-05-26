@@ -3,21 +3,15 @@ package dao;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import entities.Mezzo;
 import lombok.extern.slf4j.Slf4j;
+import utils.JpaUtil;
 
 @Slf4j
-public class MezzoDao {
-	private final EntityManager em;
-
-	public MezzoDao(EntityManager em) {
-		this.em = em;
-
-	}
+public class MezzoDao extends JpaUtil {
 
 	public void salvaMezzo(Mezzo me) {
 		try {
@@ -31,7 +25,7 @@ public class MezzoDao {
 		}
 	}
 
-	public void contaBigliettiVidimati(LocalDate dataInizioControllo, LocalDate dataFineControllo) {
+	public static void contaBigliettiTimbrati(LocalDate dataInizioControllo, LocalDate dataFineControllo) {
 		try {
 			Query query = em.createQuery(
 					"SELECT SUM(m.bigliettiTimbrati) FROM Mezzo m WHERE EXISTS (SELECT b FROM Biglietto b WHERE b.dataTimbratura BETWEEN :dataInizioControllo AND :dataFineControllo AND m.id = b.mezzo)");
@@ -47,7 +41,7 @@ public class MezzoDao {
 		}
 	}
 
-	public void aggiornaNumeroCorse(UUID id) {
+	public static void aggiornaNumeroCorse(UUID id) {
 		EntityTransaction t = em.getTransaction();
 		Mezzo m = em.find(Mezzo.class, id);
 		int corse = m.getNumeroCorse() + 1;
@@ -57,7 +51,7 @@ public class MezzoDao {
 		t.commit();
 	}
 
-	public void settaMezzoInManutenzione() {
+	public static void settaMezzoInManutenzione() {
 		EntityTransaction t = em.getTransaction();
 		t.begin();
 
@@ -68,7 +62,7 @@ public class MezzoDao {
 		query.executeUpdate();
 	}
 
-	public void settaMezzoInServizio() {
+	public static void settaMezzoInServizio() {
 		EntityTransaction t = em.getTransaction();
 		t.begin();
 		Query query = em.createQuery(

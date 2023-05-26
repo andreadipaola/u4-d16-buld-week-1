@@ -1,8 +1,5 @@
 package utils;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-
 import dao.MezzoDao;
 import dao.TrattaDao;
 import entities.Autobus;
@@ -10,12 +7,10 @@ import entities.Tram;
 import entities.Tratta;
 
 public class GestioneTrasporti {
-	private static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
 
 	public static void creaReteTrasporto() {
-		EntityManager em = emf.createEntityManager();
-		MezzoDao md = new MezzoDao(em);
-		TrattaDao td = new TrattaDao(em);
+		MezzoDao md = new MezzoDao();
+		TrattaDao td = new TrattaDao();
 
 		Tratta tr1 = new Tratta("Piazza Mancini", "Piazzale Flaminio", 30);
 		Tratta tr2 = new Tratta("Piazza Thorwaldsen", "Trastevere", 45);
