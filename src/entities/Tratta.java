@@ -1,7 +1,6 @@
 package entities;
 
 import java.util.Set;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +23,7 @@ import lombok.Setter;
 public class Tratta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID id;
+	private long id;
 	private String partenza;
 	private String capolinea;
 	@Column(name = "tempo_medio_percorrenza")

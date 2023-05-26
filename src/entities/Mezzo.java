@@ -1,7 +1,6 @@
 package entities;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -31,13 +29,13 @@ import lombok.Setter;
 public abstract class Mezzo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID id;
+	private long id;
 	protected int capienza;
 	@Column(name = "in_servizio")
 	private boolean inServizio;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "tratte_id", referencedColumnName = "tratta_id")
+//	@JoinColumn(name = "tratte_id", referencedColumnName = "tratta_id")
 	private Tratta tratta;
 
 	private String numero;

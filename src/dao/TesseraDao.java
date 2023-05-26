@@ -1,7 +1,6 @@
 package dao;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -38,7 +37,7 @@ public class TesseraDao {
 	}
 
 	// RECUPERARE DALLA TESSERA I DATI DELL' UTENTE
-	public void recuperaDatiTessera(UUID id) {
+	public void recuperaDatiTessera(long id) {
 		Tessera te = em.find(Tessera.class, id);
 
 		if (te == null) {
@@ -67,11 +66,11 @@ public class TesseraDao {
 				log.error("ATTENZIONE!!! Lei non ha alcun abbonamento attivo");
 			}
 		} catch (Exception ex) {
-			log.error("ATTENZIONE!!! Al momento non risulta alcun abbonamento attivo" + ex);
+			log.error("ATTENZIONE!!! Al momento non risulta alcun abbonamento attivo");
 		}
 	}
 
-	public void rinnovaTessera(UUID id) {
+	public void rinnovaTessera(long id) {
 
 		Tessera te = em.find(Tessera.class, id);
 
@@ -100,7 +99,7 @@ public class TesseraDao {
 	}
 
 	// DA CONTROLLARE
-	public void aggiornaValiditaAbbonamento(UUID id, Abbonamento abbonamento) {
+	public void aggiornaValiditaAbbonamento(long id, Abbonamento abbonamento) {
 
 		Tessera te = em.find(Tessera.class, id);
 
@@ -121,7 +120,7 @@ public class TesseraDao {
 	}
 
 	// DA CONTROLLARE
-	public Tessera trovaTessera(UUID id) {
+	public Tessera trovaTessera(long id) {
 		Tessera te = em.find(Tessera.class, id);
 
 		if (te == null) {

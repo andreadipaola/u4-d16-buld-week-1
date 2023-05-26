@@ -1,7 +1,6 @@
 package dao;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -44,7 +43,7 @@ public class TitoloDiViaggioDao {
 		t.commit();
 	}
 
-	public void controllaValiditaTessera(UUID id) {
+	public void controllaValiditaTessera(long id) {
 		Tessera te = em.find(Tessera.class, id);
 		if (te == null) {
 			log.error("ATTENZIONE!!! La tessera con id: " + id + " non è presente nel nostro database");
@@ -70,7 +69,7 @@ public class TitoloDiViaggioDao {
 				+ " sono stati emessi: " + titoliEmessi + classe.getSimpleName());
 	}
 
-	public void controllaTitolDiViaggio(UUID idTitolo, UUID idMezzo) {
+	public void controllaTitololDiViaggio(long idTitolo, long idMezzo) {
 		EntityTransaction t = em.getTransaction();
 		TitoloDiViaggio tv = em.find(TitoloDiViaggio.class, idTitolo);
 

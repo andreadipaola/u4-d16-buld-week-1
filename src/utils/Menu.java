@@ -2,13 +2,18 @@ package utils;
 
 import java.time.LocalDate;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
-import java.util.UUID;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import dao.MezzoDao;
 import dao.PuntoDiEmissioneDao;
 import dao.TesseraDao;
 import dao.TitoloDiViaggioDao;
+import dao.TrattaDao;
 import dao.UtenteDao;
 import entities.Abbonamento;
 import entities.Biglietto;
@@ -17,10 +22,11 @@ import entities.Mezzo;
 import entities.Rivenditore;
 import entities.Tessera;
 import entities.Utente;
+import enums.Periodicita;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class Menu extends JpaUtil {
+public class Menu {
 
 	static Scanner sc = new Scanner(System.in);
 	static final String ANSI_RESET = "\u001B[0m";
@@ -31,7 +37,7 @@ public class Menu extends JpaUtil {
 	static int selezione;
 	static int selectMezzo;
 	static long nTessera;
-	static UUID mezzoId;
+	static long mezzoId;
 	static Mezzo v;
 
 	public static void runApp() {
@@ -85,9 +91,9 @@ public class Menu extends JpaUtil {
 				case (2):
 					acquistaTitoloDiViaggio();
 					break;
-//				case (3):
-//					scegliMezzo();
-//					break;
+				case (3):
+					scegliMezzo();
+					break;
 				default:
 					log.error("Valore non presente nella lista!");
 					System.exit(0);
@@ -161,7 +167,7 @@ public class Menu extends JpaUtil {
 		String cognome = sc.next();
 
 		System.out.println("Inserisci il tuo contatto telefonico");
-		String email = sc.next();
+		String telefono = sc.next();
 
 		saveTessera(LocalDate.now(), LocalDate.now().plusYears(1));
 	}
@@ -175,41 +181,27 @@ public class Menu extends JpaUtil {
 	}
 
 	public static void verificaTessera() {
-		System.out.println("Inserisci numero tessera");
-//		UUID numeroTessera = sc.nextLong();
-		UUID numeroTessera;
-		String uuidString = sc.nextLine();
+		System.out.println("Inserisci il numero di tessera:");
+		long numeroTessera = sc.nextLong();
+		sc.nextLine(); // Consuma il new line dopo nextLong()
 
-		try {
-			numeroTessera = UUID.fromString(uuidString);
-			System.out.println("UUID inserito: " + numeroTessera.toString());
-		} catch (IllegalArgumentException ex) {
-			System.out.println("Formato UUID non valido." + ex);
-		}
+		TesseraDao td = new TesseraDao();
+		td.recuperaDatiTessera(numeroTessera);
 
-//		TesseraDao.recuperaDatiTessera(numeroTessera);
 	}
 
 	public static void rinnovaTessera() {
-		System.out.println("Inserisci numero tessera da rinnovare");
-//		long selezione6 = sc.nextLong();
-		UUID numeroTessera;
-		String uuidString = sc.nextLine();
+		System.out.println("Inserisci numero tessera da rinnovare:");
+		long numeroTessera = sc.nextLong();
+		sc.nextLine(); // Consuma il new line dopo nextLong()
 
-		try {
-			numeroTessera = UUID.fromString(uuidString);
-			System.out.println("UUID inserito: " + numeroTessera.toString());
-		} catch (IllegalArgumentException ex) {
-			System.out.println("Formato UUID non valido." + ex);
-		}
-
-//		TesseraDao.rinnovaTessera(numeroTessera);
+		TesseraDao td = new TesseraDao();
+		td.rinnovaTessera(numeroTessera);
 	}
 
 	// METODO GESTIONE TITOLI DI VIAGGIO
 	public static void acquistaTitoloDiViaggio() {
-//		System.out.println(
-//				"1 - Biglietto ordinario (" + PuntoDiEmissioneDao.getTicketNumber(selezione) + " biglietti rimanenti)");
+		System.out.println("1 - Biglietto ordinario");
 		System.out.println("2 - Abbonamento");
 		System.out.println(ANSI_GREEN + "Scegli cosa comprare <---" + ANSI_RESET);
 		int selezione3 = sc.nextInt();
@@ -218,9 +210,9 @@ public class Menu extends JpaUtil {
 		case (1):
 			saveBiglietto();
 			break;
-//		case (2):
-//			acquistaAbbonamento();
-//			break;
+		case (2):
+			acquistaAbbonamento();
+			break;
 		default:
 			log.error("Valore non presente nella lista");
 			break;
@@ -236,12 +228,12 @@ public class Menu extends JpaUtil {
 		return u;
 	}
 
-	public static void updateUtente(UUID numeroTessera, Abbonamento abbonamento) {
+	public static void updateUtente(long numeroTessera, Abbonamento abbonamento) {
 		TesseraDao tesseraDao = new TesseraDao();
 		tesseraDao.aggiornaValiditaAbbonamento(numeroTessera, abbonamento);
 	}
 
-	public static Tessera trovaTessera(UUID id) {
+	public static Tessera trovaTessera(long id) {
 		TesseraDao td = new TesseraDao();
 		return td.trovaTessera(id);
 	}
@@ -257,191 +249,193 @@ public class Menu extends JpaUtil {
 //		PuntoDiEmissioneDao.countBiglietti(selezione);
 	}
 
-	// METODI ABBONAMENTO (CREAZIONE, VERIFICA ABBONAMENTO ATTIVO)
-//	public static void acquistaAbbonamento() {
-//		System.out.println("Inserisci il tuo numero tessera");
-////		nTessera = sc.nextLong();
-//		UUID numeroTessera;
-//		String uuidString = sc.nextLine();
-//
-//		try {
-//			numeroTessera = UUID.fromString(uuidString);
-//			System.out.println("UUID inserito: " + numeroTessera.toString());
-//		} catch (IllegalArgumentException ex) {
-//			System.out.println("Formato UUID non valido." + ex);
-//		}
-//
-//		TitoloDiViaggioDao.controllaValiditaTessera(numeroTessera);
-//		creaAbbonamento();
-//	}
+//	 METODI ABBONAMENTO (CREAZIONE, VERIFICA ABBONAMENTO ATTIVO)
+	public static void acquistaAbbonamento() {
+		System.out.println("Inserisci il tuo numero tessera");
+		long numeroTessera = sc.nextLong();
+		sc.nextLine();
 
-//	public static void saveAbbonamento(Tessera tessera, LocalDate dataEmissione, LocalDate dataScadenza,
-//			boolean validita, Periodicita periodicita) {
-//		Abbonamento a = new Abbonamento(tessera, dataEmissione, dataScadenza, validita, periodicita);
-//
-//		TitoloDiViaggioDao tvd = new TitoloDiViaggioDao();
-//		tvd.salvaTitoloDiViaggio(a);
-//
-//		updateUtente(nTessera, a);
-//		TicketingDao.countAbbonamenti(selezione);
-//	}
+		TitoloDiViaggioDao tvd = new TitoloDiViaggioDao();
+		tvd.controllaValiditaTessera(numeroTessera);
+		creaAbbonamento();
+	}
 
-//	public static void creaAbbonamento() {
-//		Tessera t = em.find(Tessera.class, nTessera);
-//		if (t.getAbbonamento() != null) {
-//			boolean validita = t.getAbbonamento().isValidita();
-//			if (validita == true) {
-//				System.out.println("Hai già un abbonamento attivo, impossibile crearne un altro");
-//				System.exit(0);
-//			} else {
-//				UUID id = t.getAbbonamento().getId();
-//
-//				System.out.println("Rinnova Abbonamento: ");
-//				System.out.println("1 - Settimanale");
-//				System.out.println("2 - Mensile");
-//				int periodo = sc.nextInt();
-//
-//				switch (periodo) {
-//				case (1):
-//					Abbonamento a = em.find(Abbonamento.class, id);
-//					a.setDataEmissione(LocalDate.now());
-//					a.setDataScadenza(LocalDate.now().plusWeeks(1));
-//					a.setValidita(true);
-//					a.setPeriodicita(Periodicita.SETTIMANALE);
-//
-//					t.begin();
-//					em.persist(a);
-//					t.commit();
-//
-//					updateUtente(nTessera, a);
-//					break;
-//				case (2):
-//					Abbonamento ab = em.find(Abbonamento.class, id);
-//					ab.setDataEmissione(LocalDate.now());
-//					ab.setDataScadenza(LocalDate.now().plusMonths(1));
-//					ab.setValidita(true);
-//					ab.setDurata(Periodicita.MENSILE);
-//
-//					t.begin();
-//					em.persist(ab);
-//					t.commit();
-//
-//					updateUtente(nTessera, ab);
-//					break;
-//				default:
-//					log.error("Valore non presente nella lista!");
-//					break;
-//				}
-//				System.out.println("Abbonamento rinnovata!");
-//			}
-//		} else if (u.getAbbonamento() == null) {
-//			System.out.println("1 - Settimanale");
-//			System.out.println("2 - Mensile");
-//			int periodo = sc.nextInt();
-//
-//			switch (periodo) {
-//			case (1):
-//				saveAbbonamento(getUtente(nTessera), LocalDate.now(), LocalDate.now().plusWeeks(1), true,
-//						Periodicita.SETTIMANALE);
-//				break;
-//			case (2):
-//				saveAbbonamento(getUtente(nTessera), LocalDate.now(), LocalDate.now().plusMonths(1), true,
-//						Periodicita.MENSILE);
-//				break;
-//			default:
-//				log.error("Valore non presente nella lista!");
-//				break;
-//			}
-//		}
-//	}
+	public static void saveAbbonamento(Tessera tessera, LocalDate dataEmissione, LocalDate dataScadenza,
+			boolean validita, Periodicita periodicita) {
+		Abbonamento a = new Abbonamento(tessera, dataEmissione, dataScadenza, validita, periodicita);
+
+		TitoloDiViaggioDao tvd = new TitoloDiViaggioDao();
+		tvd.salvaTitoloDiViaggio(a);
+
+		updateUtente(nTessera, a);
+		PuntoDiEmissioneDao ped = new PuntoDiEmissioneDao();
+		ped.abbonamentiEmessi(selezione);
+	}
+
+	public static void creaAbbonamento() {
+		EntityManager em = JpaUtil.getEntityManager();
+
+		Tessera te = em.find(Tessera.class, nTessera);
+		if (te.getAbbonamento() != null) {
+			boolean validita = te.getAbbonamento().isValidita();
+			if (validita == true) {
+				System.out.println("Hai già un abbonamento attivo, impossibile crearne un altro");
+				System.exit(0);
+			} else {
+				long id = te.getAbbonamento().getId();
+
+				System.out.println("Rinnova Abbonamento: ");
+				System.out.println("1 - Settimanale");
+				System.out.println("2 - Mensile");
+				int periodo = sc.nextInt();
+
+				switch (periodo) {
+				case (1):
+					EntityTransaction t = em.getTransaction();
+					Abbonamento a = em.find(Abbonamento.class, id);
+					a.setDataEmissione(LocalDate.now());
+					a.setDataScadenza(LocalDate.now().plusWeeks(1));
+					a.setValidita(true);
+					a.setPeriodicita(Periodicita.SETTIMANALE);
+
+					t.begin();
+					em.persist(a);
+					t.commit();
+
+					updateUtente(nTessera, a);
+					break;
+				case (2):
+					Abbonamento ab = em.find(Abbonamento.class, id);
+					ab.setDataEmissione(LocalDate.now());
+					ab.setDataScadenza(LocalDate.now().plusMonths(1));
+					ab.setValidita(true);
+					ab.setPeriodicita(Periodicita.MENSILE);
+
+					EntityTransaction t2 = em.getTransaction();
+					t2.begin();
+					em.persist(ab);
+					t2.commit();
+
+					updateUtente(nTessera, ab);
+					break;
+				default:
+					log.error("Valore non presente nella lista!");
+					break;
+				}
+				System.out.println("Abbonamento rinnovata!");
+			}
+		} else if (te.getAbbonamento() == null) {
+			System.out.println("1 - Settimanale");
+			System.out.println("2 - Mensile");
+			int periodo = sc.nextInt();
+
+			switch (periodo) {
+			case (1):
+				saveAbbonamento(trovaTessera(nTessera), LocalDate.now(), LocalDate.now().plusWeeks(1), true,
+						Periodicita.SETTIMANALE);
+				break;
+			case (2):
+				saveAbbonamento(trovaTessera(nTessera), LocalDate.now(), LocalDate.now().plusMonths(1), true,
+						Periodicita.MENSILE);
+				break;
+			default:
+				log.error("Valore non presente nella lista!");
+				break;
+			}
+		}
+	}
 
 	// METODO GESTIONE MEZZI
-//	public static void scegliMezzo() {
-//		if (selezione == 1) {
-//			String jpql = "SELECT m FROM Mezzo m JOIN m.tratta t WHERE t.partenza = :partenza AND m.inServizio = true";
-//
-//			TypedQuery<Mezzo> query = em.createQuery(jpql, Mezzo.class);
-//			query.setParameter("partenza", "Stazione Tiburtina");
-//
-//			List<Mezzo> mezzi = query.getResultList();
-//
-//			System.out.println("Mezzi in servizio:");
-//
-//			for (int i = 0; i < mezzi.size(); i++) {
-//				v = mezzi.get(i);
-//				mezzoId = v.getId();
-//				System.out.println(mezzoId + " - " + v);
-//			}
-//
-//			System.out.println(ANSI_GREEN + "Scegli su che mezzo viaggiare <---" + ANSI_RESET);
-//			selectMezzo = sc.nextInt();
-////			boolean mezzoEsistente = false;
-//
-//			for (int i = 0; i < mezzi.size(); i++) {
-//				v = mezzi.get(i);
-//				mezzoId = v.getId();
-//
-////				if (selectMezzo == mezzoId) {
-////					mezzoEsistente = true;
-////					break;
-////				}
-//			}
-//
-////			if (mezzoEsistente) {
-//			Mezzo m = em.find(Mezzo.class, selectMezzo);
-//			System.out.println("Sei salito su " + m.getClass().getSimpleName().toUpperCase() + " " + m.getNumero());
-//			convalidaTicket();
-//			TrattaDao.calcolaTempoCorsaEffettivo(selectMezzo);
-////			} else {
-////				System.out.println("Mezzo non esistente");
-////			}
-//		} else if (selezione == 2) {
-//			String jpql = "SELECT m FROM Mezzo m JOIN m.tratta t WHERE t.partenza = :partenza  AND m.inServizio = true";
-//
-//			TypedQuery<Mezzo> query = em.createQuery(jpql, Mezzo.class);
-//			query.setParameter("partenza", "Stazione Termini");
-//
-//			List<Mezzo> mezzi = query.getResultList();
-//
-//			System.out.println("Mezzi in servizio: ");
-//
-//			for (int i = 0; i < mezzi.size(); i++) {
-//				v = mezzi.get(i);
-//				mezzoId = v.getId();
-//				System.out.println(mezzoId + " - " + v);
-//			}
-//
-//			System.out.println(ANSI_GREEN + "Scegli su che mezzo viaggiare <---" + ANSI_RESET);
-//			selectMezzo = sc.nextInt();
-//			boolean mezzoEsistente = false;
-//
-//			for (int i = 0; i < mezzi.size(); i++) {
-//				v = mezzi.get(i);
-//				mezzoId = v.getId();
-//
-//				if (selectMezzo == mezzoId) {
-//					mezzoEsistente = true;
-//					break;
-//				}
-//			}
-//
-//			if (mezzoEsistente) {
-//				Mezzo m = em.find(Mezzo.class, selectMezzo);
-//				System.out.println("Sei salito su " + m.getClass().getSimpleName().toUpperCase() + " " + m.getNumero());
-//				convalidaTicket();
-//				TrattaDao.tempoEffettivo(selectMezzo);
-//			} else {
-//				System.out.println("mezzo non esistente.");
-//			}
-//		}
-//	}
+	public static void scegliMezzo() {
+		EntityManager em = JpaUtil.getEntityManager();
+		if (selezione == 1) {
+			String jpql = "SELECT m FROM Mezzo m JOIN m.tratta t WHERE t.partenza = :partenza AND m.inServizio = true";
+
+			TypedQuery<Mezzo> query = em.createQuery(jpql, Mezzo.class);
+			query.setParameter("partenza", "Stazione Tiburtina");
+
+			List<Mezzo> mezzi = query.getResultList();
+
+			System.out.println("Mezzi in servizio:");
+
+			for (int i = 0; i < mezzi.size(); i++) {
+				v = mezzi.get(i);
+				mezzoId = v.getId();
+				System.out.println(mezzoId + " - " + v);
+			}
+
+			System.out.println(ANSI_GREEN + "Scegli su che mezzo viaggiare <---" + ANSI_RESET);
+			selectMezzo = sc.nextInt();
+			boolean mezzoEsistente = false;
+
+			for (int i = 0; i < mezzi.size(); i++) {
+				v = mezzi.get(i);
+				mezzoId = v.getId();
+
+				if (selectMezzo == mezzoId) {
+					mezzoEsistente = true;
+					break;
+				}
+			}
+
+			if (mezzoEsistente) {
+				Mezzo m = em.find(Mezzo.class, selectMezzo);
+				System.out.println("Sei salito su " + m.getClass().getSimpleName().toUpperCase() + " " + m.getNumero());
+				convalidaTitolo();
+				TrattaDao td = new TrattaDao();
+				td.calcolaTempoCorsaEffettivo(selectMezzo);
+			} else {
+				System.out.println("Mezzo non esistente");
+			}
+		} else if (selezione == 2) {
+			String jpql = "SELECT m FROM Mezzo m JOIN m.tratta t WHERE t.partenza = :partenza  AND m.inServizio = true";
+
+			TypedQuery<Mezzo> query = em.createQuery(jpql, Mezzo.class);
+			query.setParameter("partenza", "Stazione Termini");
+
+			List<Mezzo> mezzi = query.getResultList();
+
+			System.out.println("Mezzi in servizio: ");
+
+			for (int i = 0; i < mezzi.size(); i++) {
+				v = mezzi.get(i);
+				mezzoId = v.getId();
+				System.out.println(mezzoId + " - " + v);
+			}
+
+			System.out.println(ANSI_GREEN + "Scegli su che mezzo viaggiare <---" + ANSI_RESET);
+			selectMezzo = sc.nextInt();
+			boolean mezzoEsistente = false;
+
+			for (int i = 0; i < mezzi.size(); i++) {
+				v = mezzi.get(i);
+				mezzoId = v.getId();
+
+				if (selectMezzo == mezzoId) {
+					mezzoEsistente = true;
+					break;
+				}
+			}
+
+			if (mezzoEsistente) {
+				Mezzo m = em.find(Mezzo.class, selectMezzo);
+				System.out.println("Sei salito su " + m.getClass().getSimpleName().toUpperCase() + " " + m.getNumero());
+				convalidaTitolo();
+				TrattaDao td = new TrattaDao();
+				td.calcolaTempoCorsaEffettivo(selectMezzo);
+			} else {
+				System.out.println("mezzo non esistente.");
+			}
+		}
+	}
 
 	// METODO PER OBLITERARE IL BIGLIETTO O CONTROLLARE L'ABBONAMENTO
-//	public static void convalidaTitolo() {
-//		System.out.println("Inserisci il codice biglietto/abbonamento");
-//		int select = sc.nextInt();
-//
-//		TitoloDiViaggioDao.getTitolo(select, selectMezzo);
-//	}
+	public static void convalidaTitolo() {
+		System.out.println("Inserisci il codice biglietto/abbonamento");
+		int select = sc.nextInt();
+
+		TitoloDiViaggioDao tvd = new TitoloDiViaggioDao();
+		tvd.controllaTitololDiViaggio(select, selectMezzo);
+	}
 
 }

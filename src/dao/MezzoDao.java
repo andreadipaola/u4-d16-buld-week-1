@@ -1,7 +1,6 @@
 package dao;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -47,7 +46,7 @@ public class MezzoDao {
 		}
 	}
 
-	public void aggiornaNumeroCorse(UUID id) {
+	public void aggiornaNumeroCorse(long id) {
 		EntityTransaction t = em.getTransaction();
 		Mezzo m = em.find(Mezzo.class, id);
 		int corse = m.getNumeroCorse() + 1;
@@ -66,6 +65,7 @@ public class MezzoDao {
 		query.setParameter("dataInizioManutenzione", LocalDate.now());
 		query.setParameter("dataFinemanutenzione", LocalDate.now().plusDays(7));
 		query.executeUpdate();
+		t.commit();
 	}
 
 	public void settaMezzoInServizio() {

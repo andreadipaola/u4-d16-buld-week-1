@@ -1,7 +1,5 @@
 package entities;
 
-import java.util.UUID;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +23,7 @@ import lombok.ToString;
 public class Utente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID codiceFiscale;
+	private long codiceFiscale;
 	private String nome;
 	private String cognome;
 	private String recapitoTelefonico;

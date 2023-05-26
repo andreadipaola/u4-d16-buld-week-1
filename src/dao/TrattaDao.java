@@ -1,7 +1,6 @@
 package dao;
 
 import java.util.Random;
-import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -33,7 +32,7 @@ public class TrattaDao {
 		}
 	}
 
-	public void calcolaTempoCorsaEffettivo(UUID id) {
+	public void calcolaTempoCorsaEffettivo(long id) {
 		Mezzo m = em.find(Mezzo.class, id);
 		double numero = m.getTratta().getTempoMedioPercorrenza();
 		double rangeMinimo = 0.1;

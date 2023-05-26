@@ -1,7 +1,5 @@
 package dao;
 
-import java.util.UUID;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
@@ -29,7 +27,7 @@ public class PuntoDiEmissioneDao {
 		}
 	}
 
-	public void bigliettiEmessi(UUID id) {
+	public void bigliettiEmessi(long id) {
 		PuntoDiEmissione pe = em.find(PuntoDiEmissione.class, id);
 		int bigliettiEmessi = pe.getBigliettiEmessi() + 1;
 		try {
@@ -44,7 +42,7 @@ public class PuntoDiEmissioneDao {
 
 	}
 
-	public void abbonamentiEmessi(UUID id) {
+	public void abbonamentiEmessi(long id) {
 		PuntoDiEmissione pe = em.find(PuntoDiEmissione.class, id);
 		int abbonamentiEmessi = pe.getAbbonamentiEmessi() + 1;
 		try {
@@ -59,7 +57,7 @@ public class PuntoDiEmissioneDao {
 
 	}
 
-	public void getTitoliEmessi(UUID id) {
+	public void getTitoliEmessi(long id) {
 		PuntoDiEmissione pe = em.find(PuntoDiEmissione.class, id);
 
 		int bigliettiEmessi = pe.getBigliettiEmessi();

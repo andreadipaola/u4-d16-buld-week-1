@@ -1,11 +1,8 @@
 package entities;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,14 +20,14 @@ import lombok.Setter;
 @Entity
 @Table(name = "titoli_di_viaggio")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "tipo_di_titolo", discriminatorType = DiscriminatorType.STRING)
+//@DiscriminatorColumn(name = "tipo_di_titolo", discriminatorType = DiscriminatorType.STRING)
 @NoArgsConstructor
 @Getter
 @Setter
 public abstract class TitoloDiViaggio {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID id;
+	private long id;
 	@Column(name = "data_emissione")
 	private LocalDate dataEmissione;
 	@Column(name = "data_scadenza")

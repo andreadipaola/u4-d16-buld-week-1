@@ -1,7 +1,6 @@
 package entities;
 
 import java.util.Set;
-import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,7 +31,7 @@ import lombok.Setter;
 public abstract class PuntoDiEmissione {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID id;
+	private long id;
 	@Column(name = "biglietti_emessi")
 	private int bigliettiEmessi;
 	@Column(name = "abbonamenti_emessi")

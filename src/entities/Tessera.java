@@ -1,7 +1,6 @@
 package entities;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,7 +27,7 @@ public class Tessera {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID id;
+	private long id;
 	@Column(name = "data_emissione")
 	private LocalDate dataEmissione;
 	@Column(name = "data_scadenza")
